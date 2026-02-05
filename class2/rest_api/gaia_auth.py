@@ -44,4 +44,11 @@ if __name__ == "__main__":
     )
     print(response.json())
 
-    # ipdb.set_trace()
+    endpoint = "logout"
+    url = f"{base_url}{endpoint}"
+    payload = {}
+
+    response = requests.post(
+        url, data=json.dumps(payload), headers=headers, verify=ssl_verify
+    )
+    print(response)
