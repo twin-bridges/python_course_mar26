@@ -1,9 +1,9 @@
 import requests
 import os
+import json
 from dotenv import load_dotenv
 
 if __name__ == "__main__":
-
     host = "chkpnt-pod99.lasthop.io"
     api_version = "1.8"
     base_url = f"https://{host}/gaia_api/"
@@ -23,4 +23,3 @@ if __name__ == "__main__":
     response = requests.post(
         url, data=json.dumps(login_payload), headers=headers, verify=ssl_verify
     )
-
