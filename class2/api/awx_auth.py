@@ -2,7 +2,7 @@ import requests
 import os
 import ipdb  # noqa
 from dotenv import load_dotenv
-from rich import print
+# from rich import print
 
 awx_host = "54.241.198.61"
 port = "32309"
@@ -14,6 +14,9 @@ load_dotenv()
 user = "admin"
 admin_pass = os.environ["AWX_ADMIN"]
 creds = (user, admin_pass)
+
+test_url = f"http://awx_host.lasthop.io:{port}/api/v2/"
+print(f"\n{test_url}\n")
 
 res = requests.post(url, auth=creds, json={"description": "Testing auth"}, verify=False)
 json_resp = res.json()

@@ -1,14 +1,14 @@
 import requests
 import os
 import json
-from rich import print
+# from rich import print
 from dotenv import load_dotenv
 import ipdb # noqa
 
 if __name__ == "__main__":
     host = "chkpnt-pod99.lasthop.io"
     api_version = "1.8"
-    base_url = f"https://{host}/gaia_api/"
+    base_url = f"https://{host}/gaia_api/v{api_version}/"
     endpoint = "login"
 
     # This looks for a .env file and loads it
@@ -25,6 +25,9 @@ if __name__ == "__main__":
     response = requests.post(
         url, data=json.dumps(login_payload), headers=headers, verify=ssl_verify
     )
+
+    print(f"\n{base_url}\n")
+
     print(response)
     print(response.status_code)
     resp_struct = response.json()
@@ -34,7 +37,8 @@ if __name__ == "__main__":
     headers["X-chkp-sid"] = session_id
     print(headers)
 
-    endpoint = "show-version"
+    #endpoint = "show-version"
+    endpoint = "show-api-versions"
     url = f"{base_url}{endpoint}"
     payload = {}
 
@@ -43,6 +47,7 @@ if __name__ == "__main__":
         url, data=json.dumps(payload), headers=headers, verify=ssl_verify
     )
     print(response.json())
+    ipdb.set_trace()
 
     endpoint = "logout"
     url = f"{base_url}{endpoint}"
