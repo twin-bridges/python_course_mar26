@@ -12,6 +12,12 @@ class GaiaAuthError(Exception):
     pass
 
 
+class GaiaLogoutError(Exception):
+    """Raised when the API returns a failure during the logout process."""
+
+    pass
+
+
 class GaiaAPI:
     def __init__(self, host, username, password, api_version="1.8", ssl_verify=False):
         self.host = host
@@ -36,8 +42,14 @@ class GaiaAPI:
     def logout(self):
         endpoint = "logout"
         res = self.call(endpoint)
-        ipdb.set_trace()
-        print(res)
+        if res.status_code == 200:
+            msg = res.json()["message"]
+        if res.status_code == 200 and msg == "OK":
+            if "X-chkp-sid" in self.headers:
+                self.headers.pop("X-chkp-sid")
+        else:
+            msg = "Failed to 'logout' from Gaia API"
+            raise GaiaLogoutError(msg)
 
     def call(self, endpoint, payload=None):
         url = self.base_url + endpoint
@@ -68,9 +80,8 @@ if __name__ == "__main__":
 
     api_client = GaiaAPI(host=host, username=user, password=admin_pass)
     api_client.login()
-    # print(api_client.headers)
 
     res = api_client.call(endpoint="show-version")
-    print(res)
+    print(res.json())
 
     api_client.logout()
