@@ -33,6 +33,12 @@ class GaiaAPI:
         resp_struct = response.json()
         self.headers["X-chkp-sid"] = resp_struct["sid"]
 
+    def logout(self):
+        endpoint = "logout"
+        res = self.call(endpoint)
+        ipdb.set_trace()
+        print(res)
+
     def call(self, endpoint, payload=None):
         url = self.base_url + endpoint
         if payload is None:
@@ -47,7 +53,7 @@ authenticate to the API.
         response = requests.post(
             url, data=json.dumps(payload), headers=self.headers, verify=self.ssl_verify
         )
-        return response.json()
+        return response
 
 
 if __name__ == "__main__":
@@ -62,16 +68,9 @@ if __name__ == "__main__":
 
     api_client = GaiaAPI(host=host, username=user, password=admin_pass)
     api_client.login()
-    print(api_client.session_id)
+    # print(api_client.headers)
 
     res = api_client.call(endpoint="show-version")
     print(res)
 
-#    endpoint = "logout"
-#    url = f"{base_url}{endpoint}"
-#    payload = {}
-#
-#    response = requests.post(
-#        url, data=json.dumps(payload), headers=headers, verify=ssl_verify
-#    )
-#    print(response)
+    api_client.logout()
