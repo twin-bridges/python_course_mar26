@@ -1,8 +1,14 @@
 import os
 import json
+import time
+import ipdb  # noqa
 from rich import print
 from dotenv import load_dotenv
 from netmiko import ConnectHandler
+
+# mS values for various times
+ONE_DAY_MS = 86_400_000
+ONE_HOUR_MS = 3_600_000
 
 # This looks for a .env file and loads it
 load_dotenv()
@@ -30,20 +36,34 @@ with ConnectHandler(**chkpt_fw) as ssh_conn:
     cmd = f'''mgmt_cli login user "admin" password "{admin_pass}" --format json'''
     data = ssh_conn.send_command(cmd)
     d_struct = json.loads(data)
-    # print(d_struct)
-
     sid = d_struct["sid"]
+
+    # Capture current session
+    cmd = f'mgmt_cli show-session --session-id "{sid}" --format json'
+    data = ssh_conn.send_command(cmd)
+    d_struct = json.loads(data)
+    my_session_uid = d_struct["uid"]
+
     cmd = f'mgmt_cli show-sessions details-level "full" --session-id "{sid}" --format json'
     data = ssh_conn.send_command(cmd)
     d_struct = json.loads(data)
-    # print(d_struct)
 
     sessions = d_struct["objects"]
+    # Enable debugger and quit to accumulate stale sessions
+    # ipdb.set_trace()
+
+    print(f"Session Count: {len(sessions)}")
     for session in sessions:
         # The walrus := (assign and evaluate in one operation)
         session_timeout = session["session-timeout"]
+        session_uid = session["uid"]
+        changes = session["changes"]
+        if session_uid == my_session_uid:
+            print("Skipping Current Session...")
+            continue
         if meta_info := session.get("meta-info"):
             create_time = meta_info["creation-time"]["iso-8601"]
+            epoch_create_time = meta_info["creation-time"]["posix"]
             session_user = meta_info["creator"]
             session_lock = meta_info["lock"]
             msg = f"""
@@ -52,23 +72,22 @@ Lock: {session_lock}
 Session Create Time: {create_time}
 Session Timeout: {session_timeout}
 """
-            print(msg)
+
+            # *1000 to get current_time the same scale as Chkpnt (i.e. mS)
+            current_time = int(time.time() * 1000)
+            # Check for sessions under a day old (older sessions are probably SmartConsole)
+            no_changes = bool(not changes)
+            if no_changes and current_time - epoch_create_time < ONE_DAY_MS:
+                # discard would not work.
+                cmd = f'mgmt_cli -r true disconnect uid "{session_uid}"'
+                data = ssh_conn.send_command(cmd)
+                print("\n>>> Terminating Session >>>")
+                print(session_uid)
+                print(data)
+                print(msg)
+            else:
+                print("Session over 24 hours old...retaining")
 
     cmd = f'mgmt_cli logout --session-id "{sid}" --format json'
-    cmd = f'mgmt_cli show-sessions details-level "full" --session-id "{sid}" --format json'
     data = ssh_conn.send_command(cmd)
     print(data)
-
-#    cmd = f'mgmt_cli show-sessions --session-id "{sid}" --format json'
-#    data = ssh_conn.send_command(cmd)
-#    print(data)
-#  #"uid" : "fa9ff9f8-352d-4c28-a69c-6dac18c76f2b",
-#  #"sid" : "0LRP4rU6iDlZbLpq9e3v7rEoowMjToaLMVXSUaidx3o",
-#
-#
-#    # cmd = f'''mgmt_cli login user "admin" password "{admin_pass}" --format json'''
-#    # mgmt_cli login --context gaia_api
-#
-## mgmt_cli show hostname --context gaia_api --session-id "983992120485592120101101504392120491021259212056100921201005188959212010155921209997921204997921209999685139"
-## name: chkpnt-pod99
-#
