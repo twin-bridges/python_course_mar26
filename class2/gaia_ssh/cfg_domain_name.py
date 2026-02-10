@@ -1,0 +1,28 @@
+import os
+from rich import print
+from dotenv import load_dotenv
+from netmiko import ConnectHandler
+
+# This looks for a .env file and loads it
+load_dotenv()
+
+secret = os.environ["CHKP_EXPERT"]
+
+chkpt_fw = {
+    "host": "chkpnt-pod99.lasthop.io",
+    "device_type": "checkpoint_gaia",
+    "username": "admin",
+    "use_keys": True,
+    "key_file": "/home/kbyers/.ssh/eu-sshkey.pem",
+    "session_log": "output.log",
+    "secret": secret,
+}
+
+with ConnectHandler(**chkpt_fw) as ssh_conn:
+
+    print(ssh_conn.find_prompt())
+
+    cmd = "set domainname lasthop.io"
+    data = ssh_conn.send_config_set(cmd)
+    data += ssh_conn.save_config()
+    print(data)
