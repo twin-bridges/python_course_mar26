@@ -1,0 +1,262 @@
+[
+    {
+        "uid": "62408b66-24ea-4ca6-a7ef-4d4984f535d4",
+        "type": "session",
+        "domain": {
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User",
+            "domain-type": "domain"
+        },
+        "state": "open",
+        "user-name": "admin",
+        "description": "",
+        "last-login-time": {
+            "posix": 1770759402157,
+            "iso-8601": "2026-02-10T22:36+0100"
+        },
+        "expired-session": false,
+        "application": "WEB_API",
+        "changes": 0,
+        "in-work": true,
+        "ip-address": "127.0.0.1",
+        "locks": 0,
+        "email": "",
+        "phone-number": "",
+        "connection-mode": "read write",
+        "session-timeout": 600,
+        "workflow-state": "open",
+        "workflow-history": "",
+        "comments": "",
+        "color": "black",
+        "icon": "Objects/worksession",
+        "tags": [],
+        "meta-info": {
+            "lock": "unlocked",
+            "validation-state": "ok",
+            "last-modify-time": {
+                "posix": 1770759402177,
+                "iso-8601": "2026-02-10T22:36+0100"
+            },
+            "last-modifier": "admin",
+            "creation-time": {
+                "posix": 1770759402151,
+                "iso-8601": "2026-02-10T22:36+0100"
+            },
+            "creator": "admin"
+        },
+        "read-only": false,
+        "available-actions": {
+            "edit": "true",
+            "delete": "false",
+            "clone": "false"
+        }
+    },
+    {
+        "uid": "1c49ab5c-e9de-440b-aadb-532e935a99ce",
+        "type": "session",
+        "domain": {
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User",
+            "domain-type": "domain"
+        },
+        "state": "open",
+        "user-name": "admin",
+        "description": "",
+        "last-login-time": {
+            "posix": 1770759378466,
+            "iso-8601": "2026-02-10T22:36+0100"
+        },
+        "expired-session": false,
+        "application": "WEB_API",
+        "changes": 0,
+        "in-work": true,
+        "ip-address": "127.0.0.1",
+        "locks": 0,
+        "email": "",
+        "phone-number": "",
+        "connection-mode": "read write",
+        "session-timeout": 600,
+        "workflow-state": "open",
+        "workflow-history": "",
+        "comments": "",
+        "color": "black",
+        "icon": "Objects/worksession",
+        "tags": [],
+        "meta-info": {
+            "lock": "unlocked",
+            "validation-state": "ok",
+            "last-modify-time": {
+                "posix": 1770759378473,
+                "iso-8601": "2026-02-10T22:36+0100"
+            },
+            "last-modifier": "admin",
+            "creation-time": {
+                "posix": 1770759378457,
+                "iso-8601": "2026-02-10T22:36+0100"
+            },
+            "creator": "admin"
+        },
+        "read-only": false,
+        "available-actions": {
+            "edit": "true",
+            "delete": "false",
+            "clone": "false"
+        }
+    },
+    {
+        "uid": "8f1a2bc1-a67f-4750-a474-17fa71acd331",
+        "type": "session",
+        "domain": {
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User",
+            "domain-type": "domain"
+        },
+        "state": "open",
+        "user-name": "admin",
+        "description": "",
+        "last-login-time": {
+            "posix": 1770759368604,
+            "iso-8601": "2026-02-10T22:36+0100"
+        },
+        "expired-session": false,
+        "application": "WEB_API",
+        "changes": 0,
+        "in-work": true,
+        "ip-address": "127.0.0.1",
+        "locks": 0,
+        "email": "",
+        "phone-number": "",
+        "connection-mode": "read write",
+        "session-timeout": 600,
+        "workflow-state": "open",
+        "workflow-history": "",
+        "comments": "",
+        "color": "black",
+        "icon": "Objects/worksession",
+        "tags": [],
+        "meta-info": {
+            "lock": "unlocked",
+            "validation-state": "ok",
+            "last-modify-time": {
+                "posix": 1770759368611,
+                "iso-8601": "2026-02-10T22:36+0100"
+            },
+            "last-modifier": "admin",
+            "creation-time": {
+                "posix": 1770759368598,
+                "iso-8601": "2026-02-10T22:36+0100"
+            },
+            "creator": "admin"
+        },
+        "read-only": false,
+        "available-actions": {
+            "edit": "true",
+            "delete": "false",
+            "clone": "false"
+        }
+    },
+    {
+        "uid": "0d0f74ab-6f4c-47ef-b3f7-8d0bc2ec0ebb",
+        "type": "session",
+        "domain": {
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User",
+            "domain-type": "domain"
+        },
+        "state": "open",
+        "user-name": "admin",
+        "description": "",
+        "last-login-time": {
+            "posix": 1770759359262,
+            "iso-8601": "2026-02-10T22:35+0100"
+        },
+        "expired-session": false,
+        "application": "WEB_API",
+        "changes": 0,
+        "in-work": true,
+        "ip-address": "127.0.0.1",
+        "locks": 0,
+        "email": "",
+        "phone-number": "",
+        "connection-mode": "read write",
+        "session-timeout": 600,
+        "workflow-state": "open",
+        "workflow-history": "",
+        "comments": "",
+        "color": "black",
+        "icon": "Objects/worksession",
+        "tags": [],
+        "meta-info": {
+            "lock": "unlocked",
+            "validation-state": "ok",
+            "last-modify-time": {
+                "posix": 1770759359270,
+                "iso-8601": "2026-02-10T22:35+0100"
+            },
+            "last-modifier": "admin",
+            "creation-time": {
+                "posix": 1770759359243,
+                "iso-8601": "2026-02-10T22:35+0100"
+            },
+            "creator": "admin"
+        },
+        "read-only": false,
+        "available-actions": {
+            "edit": "true",
+            "delete": "false",
+            "clone": "false"
+        }
+    },
+    {
+        "uid": "4ba065d4-9c45-482f-b407-6a1a9bada559",
+        "type": "session",
+        "domain": {
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User",
+            "domain-type": "domain"
+        },
+        "state": "open",
+        "user-name": "admin",
+        "description": "",
+        "last-login-time": {
+            "posix": 1769643712527,
+            "iso-8601": "2026-01-29T00:41+0100"
+        },
+        "expired-session": false,
+        "application": "SmartConsole",
+        "changes": 0,
+        "in-work": true,
+        "ip-address": "3.71.9.240",
+        "locks": 0,
+        "email": "",
+        "phone-number": "",
+        "connection-mode": "read write",
+        "session-timeout": 600,
+        "workflow-state": "open",
+        "workflow-history": "",
+        "comments": "",
+        "color": "black",
+        "icon": "Objects/worksession",
+        "tags": [],
+        "meta-info": {
+            "lock": "unlocked",
+            "validation-state": "ok",
+            "last-modify-time": {
+                "posix": 1769643712565,
+                "iso-8601": "2026-01-29T00:41+0100"
+            },
+            "last-modifier": "admin",
+            "creation-time": {
+                "posix": 1769643712531,
+                "iso-8601": "2026-01-29T00:41+0100"
+            },
+            "creator": "admin"
+        },
+        "read-only": false,
+        "available-actions": {
+            "edit": "true",
+            "delete": "false",
+            "clone": "false"
+        }
+    }
+]
