@@ -29,3 +29,6 @@ with ConnectHandler(**chkpt_fw) as ssh_conn:
     cmd = "gaia_api status"
     data = ssh_conn.send_command(cmd)
     print(data)
+
+    data = ssh_conn.exit_enable_mode()
+    print(ssh_conn.find_prompt())

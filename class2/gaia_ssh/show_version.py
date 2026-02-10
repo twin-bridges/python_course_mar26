@@ -12,6 +12,6 @@ chkpt_fw = {
 with ConnectHandler(**chkpt_fw) as nc:
     print(nc.find_prompt())
 
-    cmd = "api status"
+    cmd = "show version all"
     data = nc.send_command(cmd)
     print(data)
