@@ -1,0 +1,15 @@
+{
+    "uid": "6796b2f5-d449-44dc-9cf8-75b33c4ca493",
+    "name": "hq_net_128",
+    "type": "network",
+    "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+    },
+    "subnet4": "172.31.128.0",
+    "mask-length4": 24,
+    "subnet-mask": "255.255.255.0",
+    "icon": "NetworkObjects/network",
+    "color": "light green"
+}
