@@ -1,7 +1,7 @@
 import requests
 import os
 import json
-# from rich import print
+from rich import print
 from dotenv import load_dotenv
 import ipdb # noqa
 
