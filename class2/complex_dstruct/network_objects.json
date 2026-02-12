@@ -1,0 +1,51 @@
+{
+    "objects": [
+        {
+            "uid": "eff32e1a-d4ed-4df9-a6e6-398c5d88b34d",
+            "name": "CP_default_Office_Mode_addresses_pool",
+            "type": "network",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "subnet4": "172.16.10.0",
+            "mask-length4": 24,
+            "subnet-mask": "255.255.255.0",
+            "icon": "NetworkObjects/network",
+            "color": "black"
+        },
+        {
+            "uid": "6796b2f5-d449-44dc-9cf8-75b33c4ca493",
+            "name": "hq_net_128",
+            "type": "network",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "subnet4": "172.31.128.0",
+            "mask-length4": 24,
+            "subnet-mask": "255.255.255.0",
+            "icon": "NetworkObjects/network",
+            "color": "light green"
+        },
+        {
+            "uid": "caee1116-8087-4310-9208-b422d3628a7e",
+            "name": "IPv6_Link_Local_Hosts",
+            "type": "network",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "subnet6": "fe80::",
+            "mask-length6": 64,
+            "icon": "NetworkObjects/network",
+            "color": "black"
+        }
+    ],
+    "from": 1,
+    "to": 3,
+    "total": 3
+}
