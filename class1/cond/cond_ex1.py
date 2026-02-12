@@ -17,6 +17,3 @@ for service in service_list:
         print("Found DNS (TCP)")
     else:
         print(service_name)
-
-
-

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import ipdb  # noqa
-import yaml 
+import yaml
 from rich import print
 
 
@@ -24,4 +24,3 @@ if base_api == "v1" and float(api_version) >= 1.8:
 
 if base_api == "v1" or base_api == "v2":
     print("API V1 or V2")
-

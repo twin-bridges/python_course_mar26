@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import ipdb  # noqa
-import yaml 
-from rich import print
+import yaml
+# from rich import print
 
 
 with open("api_support_versions.yml") as f:
@@ -18,5 +18,3 @@ if "1." in api_version:
     base_api = "v1"
 elif "2." in api_version:
     base_api = "v2"
-
-
