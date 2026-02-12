@@ -1,7 +1,7 @@
 from rich import print
-import ipdb
+import ipdb  # noqa
 
-my_list = ['hello', 'world', "something", "else"]
+my_list = ["hello", "world", "something", "else"]
 
 for loop_var in my_list:
     if loop_var == "something":
@@ -9,5 +9,3 @@ for loop_var in my_list:
         break
     print(loop_var)
     print("...still in the loop")
-
-

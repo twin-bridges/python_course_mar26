@@ -1,6 +1,6 @@
 from rich import print
-import ipdb
+import ipdb  # noqa
 
-for loop_var in ['hello', 'world', "something", "else"]:
-    import ipdb.set_trace()
+for loop_var in ["hello", "world", "something", "else"]:
+    ipdb.set_trace()
     print(loop_var)

@@ -1,7 +1,7 @@
 from rich import print
-import ipdb
+import ipdb  # noqa
 
-my_list = ['hello', 'world', "something", "else"]
+my_list = ["hello", "world", "something", "else"]
 for loop_var in my_list:
     print(loop_var)
     # Print the first letter
