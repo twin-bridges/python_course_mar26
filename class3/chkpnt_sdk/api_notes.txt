@@ -1,0 +1,36 @@
+    
+    def __init__(self, api_client_args=None):
+        self.server = api_client_args.server
+        # web-api versus gaia-api
+        self.context = api_client_args.context 
+        self.api_version = api_client_args.api_version
+        self.unsafe = api_client_args.unsafe
+        self.fingerprint = api_client_args.fingerprint
+        self.sid = api_client_args.sid
+
+    # Context manager
+    def __enter__(self):
+    def __exit__(self, exc_type, exc_value, traceback):
+
+    # Toggle to unsafe=False and will prompt you for fingerprint the first time.
+    # Verification is hard
+    def get_server_fingerprint(self):
+    def check_fingerprint(self):
+    def save_fingerprint_to_file(server, fingerprint, filename="fingerprints.txt"):
+    def read_fingerprint_from_file(server, filename="fingerprints.txt"):
+
+    def login(self, username, password, continue_last_session=False, domain=None, read_only=False,
+    def login_with_api_key(self, api_key, continue_last_session=False, domain=None, read_only=False, payload=None):
+    def login_as_root(self, domain=None, payload=None):
+
+### Main API Call ###
+    def api_call(self, command, payload=None, sid=None, wait_for_task=True, timeout=-1, method="POST"):
+
+### API Call when pagination / multiple api calls are required
+    def api_query(self, command, details_level="standard", container_key="objects", include_container_key=False,
+
+    def check_tasks_status(task_result):
+    def ask_yes_no_question(question):
+
+    def close_connection(self):
+
