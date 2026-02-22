@@ -1,4 +1,5 @@
 import os
+import json
 from rich import print
 from dotenv import load_dotenv
 from mgmt_funcs import login, api_call, logout
@@ -45,8 +46,8 @@ if __name__ == "__main__":
     # Repository scripts?
         # You can create python repository scripts | this could be interesting
     # Package deployment -- sounds interesting
-    url = base_url + "show-repository-packages"
-    #url = base_url + "show-task"
+    #url = base_url + "show-repository-packages"
+    url = base_url + "show-tasks"
     #payload = {
     #    "task-id": "37b26077-b9bb-40c7-a522-45ad0bee23c3",
     #    "details-level": "full"
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     # User
     # High-availability
     # Administrators
-    url = base_url + "show-logs"    # Interesting
+    #url = base_url + "show-logs"    # Interesting
     # Cloud services    
     # Misc
     #   where-used
@@ -64,7 +65,9 @@ if __name__ == "__main__":
     #   show-unused-objects
 
     res = api_call(url, headers)
-    print(res.json())
+    print(res.json())   
+    with open("output.json", "w") as f:
+        json.dump(res.json(), f, indent=4)
 
     url = base_url + "logout"
     headers = logout(url, headers)
