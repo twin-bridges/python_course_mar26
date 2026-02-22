@@ -1,0 +1,73 @@
+{
+    "tasks": [
+        {
+            "task-id": "d1313671-7c40-4c95-be76-a2ac451705e7",
+            "task-name": "chkpnt-pod99 - is_ve-CMD",
+            "status": "succeeded",
+            "progress-percentage": 100,
+            "suppressed": true,
+            "comments": "Completed",
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1769728500793,
+                    "iso-8601": "2026-01-30T00:15+0100"
+                },
+                "last-modifier": "WEB_API",
+                "creation-time": {
+                    "posix": 1769728500373,
+                    "iso-8601": "2026-01-30T00:15+0100"
+                },
+                "creator": "WEB_API"
+            }
+        },
+        {
+            "task-id": "37b26077-b9bb-40c7-a522-45ad0bee23c3",
+            "task-name": "Getting information for this software package: all",
+            "status": "succeeded",
+            "progress-percentage": 100,
+            "suppressed": true,
+            "comments": "",
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1771002543999,
+                    "iso-8601": "2026-02-13T18:09+0100"
+                },
+                "last-modifier": "admin",
+                "creation-time": {
+                    "posix": 1771002542681,
+                    "iso-8601": "2026-02-13T18:09+0100"
+                },
+                "creator": "admin"
+            }
+        },
+        {
+            "task-id": "ffb1b55b-1436-40e1-9076-83ebe54b5c68",
+            "task-name": "Trusted CA's update",
+            "status": "succeeded",
+            "progress-percentage": 100,
+            "suppressed": false,
+            "comments": "Trusted CA's Package has been updated. Please install policy for the changes to take effect",
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1769648413434,
+                    "iso-8601": "2026-01-29T02:00+0100"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1769648405040,
+                    "iso-8601": "2026-01-29T02:00+0100"
+                },
+                "creator": "System"
+            }
+        }
+    ],
+    "from": 1,
+    "to": 3,
+    "total": 3
+}

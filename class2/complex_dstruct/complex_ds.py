@@ -1,6 +1,6 @@
 import json
 from rich import print
-import ipdb # noqa
+import ipdb  # noqa
 
 with open("sessions.json") as f:
     sessions = json.load(f)
