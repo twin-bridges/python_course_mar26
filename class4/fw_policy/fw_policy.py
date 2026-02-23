@@ -9,10 +9,48 @@ class ChkPntConfigError(Exception):
     pass
 
 
+class ChkPntPolicyInstallError(Exception):
+    pass
+
+
+def extract_fw_name(api_client):
+    # Extract the fw_name from the DNS name
+    fqdn = api_client.server
+    if "." in fqdn:
+        fw_name = fqdn.split(".")[0]
+        return fw_name
+    else:
+        raise ValueError("Invalid firewall name: {fqdn}")
+
+
+def display_fw_policy(api_client, layer="Network"):
+    payload = {"name": layer}
+    api_res = api_client.api_call(command="show-access-rulebase", payload=payload)
+    fw_rules = api_res.data["rulebase"]
+    print(fw_rules)
+
+
+def install_fw_policy(api_client, policy_package="Standard", targets=None):
+    """
+    Install the firewall policy on firewall.
+
+    This code ASSUMES all-in-one firewall i.e. target firewall is web_api host by default.
+    """
+    if targets is None:
+        fw_name = extract_fw_name(api_client)
+        targets = [fw_name]
+
+    payload = {"policy-package": policy_package, "targets": targets}
+    api_res = api_client.api_call(command="install-policy", payload=payload)
+    if not api_res.success:
+        msg = f"Failed to install firewall policy: {payload}"
+        raise ChkPntPolicyInstallError(msg)
+
+
 def cfg_fw_policy(api_client):
     """Use mgmt API to configure firewall policy rules."""
 
-    fw_name = "chkpnt-pod99"
+    fw_name = extract_fw_name(api_client)
     management_rules = [
         {
             "layer": "Network",
@@ -39,16 +77,10 @@ def cfg_fw_policy(api_client):
     ]
 
     for fw_rule in management_rules:
-        ipdb.set_trace()
-
         # Check if fw_rule already exists
         obj_exists = False
         payload = {"layer": fw_rule["layer"], "name": fw_rule["name"]}
         api_res = api_client.api_call(command="show-access-rule", payload=payload)
-        # api_res = api_client.api_call(command="show-access-rulebase", payload=payload)
-
-        # fw_rules = api_res.data['rulebase']
-        # print(fw_rules)
 
         if api_res.success:
             obj_exists = True
@@ -66,7 +98,6 @@ def cfg_fw_policy(api_client):
 
 def main():
     host = "chkpnt-pod99.lasthop.io"
-    fw_name = "chkpnt-pod99"
 
     # This looks for a .env file and loads it
     load_dotenv()
@@ -84,8 +115,9 @@ def main():
         api_client.login(username, password)
         cfg_fw_policy(api_client)
         api_client.api_call(command="publish")
-        payload = {"policy-package": "Standard", "targets": [fw_name]}
-        api_client.api_call(command="install-policy", payload=payload)
+
+        install_fw_policy(api_client)
+        display_fw_policy(api_client)
 
 
 if __name__ == "__main__":
