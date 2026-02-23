@@ -2,7 +2,7 @@ import os
 from rich import print
 from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
-import ipdb  # noqa
+import ipdb # noqa
 
 class ChkPntConfigError(Exception):
     pass
