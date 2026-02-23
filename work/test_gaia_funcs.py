@@ -33,7 +33,17 @@ if __name__ == "__main__":
     # url = base_url + "run-reboot" # Looks interesting
     url = base_url + "show-serial-number" # Yes
     url = base_url + "show-asset" # Yes
-    url = base_url + "show-diagnostics" # Yes
+    url = base_url + "show-diagnostics" # Looks interesting / requires payload
+    # add-secheduled-job / set- / show- / Looks very interesting
+    # lightshot -- Lightweight snapshot
+    # scheduled backups
+    # scheduled snapshots
+    # custom intelligence feeds
+    # user management
+    # run-script    / Definitely do this!!!
+    # Interfaces
+    # Licensing
+    
 
     res = api_call(url, headers)
     print(res.json())

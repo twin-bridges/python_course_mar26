@@ -31,7 +31,8 @@ if __name__ == "__main__":
     # assign session ownershipa
     # take over session
     # switch session    # looks interesting
-    url = base_url + "show-session"
+    #url = base_url + "show-sessions"
+    url = base_url + "show-gateway-capabilities"
     # show-login-message
     # set-login-message
     # show-gateway-capabilities
@@ -47,7 +48,7 @@ if __name__ == "__main__":
         # You can create python repository scripts | this could be interesting
     # Package deployment -- sounds interesting
     #url = base_url + "show-repository-packages"
-    url = base_url + "show-tasks"
+    #url = base_url + "show-tasks"
     #payload = {
     #    "task-id": "37b26077-b9bb-40c7-a522-45ad0bee23c3",
     #    "details-level": "full"
