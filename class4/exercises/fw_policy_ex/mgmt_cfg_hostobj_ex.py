@@ -2,6 +2,7 @@ import os
 from rich import print
 from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
+from object_funcs import cfg_host_object
 import ipdb  # noqa
 
 

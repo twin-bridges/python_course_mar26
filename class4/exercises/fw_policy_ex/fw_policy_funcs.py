@@ -25,6 +25,7 @@ def install_fw_policy(api_client, policy_package="Standard", targets=None):
 
     This code ASSUMES all-in-one firewall i.e. target firewall is web_api host by default.
     """
+    import ipdb; ipdb.set_trace()
     if targets is None:
         fw_name = extract_fw_name(api_client.server)
         targets = [fw_name]
@@ -67,6 +68,7 @@ def cfg_fw_policy(api_client, fw_rules):
 
     for fw_rule in management_rules:
         # Check if fw_rule already exists
+        ipdb.set_trace()
         obj_exists = False
         payload = {"layer": fw_rule["layer"], "name": fw_rule["name"]}
         api_res = api_client.api_call(command="show-access-rule", payload=payload)

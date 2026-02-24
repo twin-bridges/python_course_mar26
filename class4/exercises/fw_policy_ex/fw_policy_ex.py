@@ -5,8 +5,8 @@ from fw_policy_funcs import (
     cfg_fw_policy,
     install_fw_policy,
     display_fw_policy,
-    extract_fw_name,
 )
+from object_funcs import cfg_host_object
 from rich import print  # noqa
 import ipdb  # noqa
 
@@ -14,36 +14,21 @@ import ipdb  # noqa
 def main():
     host = "chkpnt-pod99.lasthop.io"
 
-    #  8     - name: Add Corp Web Server
-    #  9       check_point.mgmt.cp_mgmt_host:
-    # 10         name: Corp Web Server
-    # 11         ipv4_address: 172.31.144.220
-    # 12         color: dark green
-    # 13       notify: Publish
+    corp_web_server = {
+        "name": "Corp Web Server",
+        "ipv4-address": "172.31.144.220",
+        "color": "dark green",
+    }
 
-    fw_name = extract_fw_name(host)
     management_rules = [
         {
             "layer": "Network",
-            "name": "Ansible Management Access",
-            "source": [
-                "Ansible Server",
-                "Windows SmartConsole",
-                "Windows SmartConsole Public",
-            ],
-            "destination": fw_name,
-            "service": "Any",
+            "name": "Corp Web Server Access",
+            "source": "Any",
+            "destination": "Corp Web Server",
+            "service": ["http", "https"],
             "action": "Accept",
             "position": 1,
-        },
-        {
-            "layer": "Network",
-            "name": "SSH Access",
-            "source": "Any",
-            "destination": fw_name,
-            "service": "SSH",
-            "action": "Accept",
-            "position": 2,
         },
     ]
 
@@ -61,10 +46,11 @@ def main():
 
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
-        ipdb.set_trace()
-        cfg_fw_policy(api_client, fw_rules=management_rules)
+
+        cfg_host_object(api_client, corp_web_server)
         api_client.api_call(command="publish")
 
+        cfg_fw_policy(api_client, fw_rules=management_rules)
         install_fw_policy(api_client)
         display_fw_policy(api_client)
 
