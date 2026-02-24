@@ -29,7 +29,6 @@ def cfg_host_objects(api_client):
     }
     for host_params in (smart_console_private, smart_console_public, ansible_server):
         # Check if host already exists
-        ipdb.set_trace()
         host_exists = False
         host_name = host_params["name"]
         payload = {"name": host_name}

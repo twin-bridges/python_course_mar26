@@ -46,11 +46,9 @@ def main():
 
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
-
         cfg_host_object(api_client, corp_web_server)
-        api_client.api_call(command="publish")
-
         cfg_fw_policy(api_client, fw_rules=management_rules)
+        api_client.api_call(command="publish")
         install_fw_policy(api_client)
         display_fw_policy(api_client)
 

@@ -40,38 +40,12 @@ def install_fw_policy(api_client, policy_package="Standard", targets=None):
 def cfg_fw_policy(api_client, fw_rules):
     """Use mgmt API to configure firewall policy rules."""
 
-    fw_name = extract_fw_name(api_client.server)
-    management_rules = [
-        {
-            "layer": "Network",
-            "name": "Ansible Management Access",
-            "source": [
-                "Ansible Server",
-                "Windows SmartConsole",
-                "Windows SmartConsole Public",
-            ],
-            "destination": fw_name,
-            "service": "Any",
-            "action": "Accept",
-            "position": 1,
-        },
-        {
-            "layer": "Network",
-            "name": "SSH Access",
-            "source": "Any",
-            "destination": fw_name,
-            "service": "SSH",
-            "action": "Accept",
-            "position": 2,
-        },
-    ]
-
-    for fw_rule in management_rules:
+    for fw_rule in fw_rules:
         # Check if fw_rule already exists
-        ipdb.set_trace()
         obj_exists = False
         payload = {"layer": fw_rule["layer"], "name": fw_rule["name"]}
         api_res = api_client.api_call(command="show-access-rule", payload=payload)
+        ipdb.set_trace()
 
         if api_res.success:
             obj_exists = True

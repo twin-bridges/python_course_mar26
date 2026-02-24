@@ -4,7 +4,6 @@ import ipdb  # noqa
 
 def cfg_host_object(api_client, host_object):
 
-    ipdb.set_trace()
     obj_type = "host"
 
     # Check if host already exists
