@@ -13,8 +13,13 @@ def cfg_object(api_client, obj_type, obj_params, delete_obj=False):
         object_exists = True
 
     if delete_obj:
-        payload = {"name": obj_params["name"]}
-        api_res = api_client.api_call(command=f"delete-{obj_type}", payload=payload)
+        if object_exists:
+            payload = {"name": obj_params["name"]}
+            api_res = api_client.api_call(command=f"delete-{obj_type}", payload=payload)
+        else:
+            # Nothing to do, object to delete doesn't exist
+            pass
+        return
 
     if object_exists:
         # Object already exists, update parameters
@@ -36,12 +41,15 @@ def cfg_host_object(api_client, host_object):
     obj_type = "host"
     cfg_object(api_client, obj_type=obj_type, obj_params=host_object)
 
+def delete_host_object(api_client, host_object):
+    """Wrapper for better naming."""
+    obj_type = "host"
+    cfg_object(api_client, obj_type=obj_type, obj_params=host_object, delete_obj=True)
 
 def delete_host_objects(api_client, host_objects):
     """Delete a list/interable of host objects."""
-    obj_type = "host"
     for host_obj in host_objects:
-        cfg_object(api_client, obj_type=obj_type, obj_params=host_obj, delete_obj=True)
+        delete_host_object(api_client, host_obj)
 
 
 def cfg_group_object(api_client, group_object):

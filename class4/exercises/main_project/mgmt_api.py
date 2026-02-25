@@ -4,7 +4,7 @@ import ipdb  # noqa
 from rich import print  # noqa
 from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
-from chkpt_object_funcs import cfg_host_objects, cfg_group_object
+from chkpt_object_funcs import cfg_host_objects, cfg_group_object, delete_host_objects
 
 
 def read_blocked_ips_file():
@@ -70,6 +70,7 @@ def main():
 
         # Convert to host object dict using list comprehension
         blocked_ip_objs = [gen_host_object(ip) for ip in add_blocked_ips]
+        delete_ip_objs = [gen_host_object(ip) for ip in remove_blocked_ips]
 
         # Configure host objects for blocked IPs
         cfg_host_objects(api_client, blocked_ip_objs)
@@ -80,6 +81,9 @@ def main():
             "members": new_blocked_ips,
         }
         cfg_group_object(api_client, blocked_ip_group)
+
+        # Remove unused host objects (must come after group membership update)
+        delete_host_objects(api_client, delete_ip_objs)
 
         api_client.api_call(command="publish")
 
