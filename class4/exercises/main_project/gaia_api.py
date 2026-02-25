@@ -1,8 +1,34 @@
 import os
 import ipdb  # noqa
+import operator
 from rich import print
 from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
+
+
+def condition_check(cond1, cond2, comparator):
+    """Function to consolidate the condition check code."""
+
+    CHECK_PASSED = True
+    operations = {
+        "==": operator.eq,
+        "!=": operator.ne,
+        "<=": operator.le,
+        ">=": operator.ge,
+        "<": operator.lt,
+        ">": operator.gt,
+    }
+
+    if comparator not in operations:
+        raise ValueError(f"Invalid comparator: {comparator}")
+
+    if operations[comparator](cond1, cond2):
+        print("[green]pass[/green]")
+    else:
+        CHECK_PASSED = False
+        print("[red]fail[/red]")
+
+    return CHECK_PASSED
 
 
 def check_password_policy(api_client):
@@ -11,10 +37,8 @@ def check_password_policy(api_client):
 
     password_policy = api_res.data
     password_lock = password_policy["lock-settings"]
-    password_history = password_policy["password-history"]
-    # password_strength = password_policy["password-strength"]
-    ipdb.set_trace()
-    print(password_history)
+    password_strength = password_policy["password-strength"]
+    print(password_strength)
 
     failed_attempts = password_lock["failed-attempts-settings"][
         "failed-attempts-allowed"
@@ -26,45 +50,31 @@ def check_password_policy(api_client):
     lock_inactive_accounts = password_lock["inactivity-settings"][
         "lock-unused-accounts-enabled"
     ]
+    password_complexity = password_strength["complexity"]
+    password_min_length = password_strength["minimum-length"]
 
-    CHECKS_PASSED = True
     MAX_FAILED_ATTEMPTS = 10
     MIN_LOCKOUT_DURATION = 600
     MAX_INACTIVE_DAYS = 365
     LOCK_INACTIVE_ACCOUNTS = True
+    MIN_PWD_CHAR_COMPLEXITY = 3
+    MIN_PWD_LENGTH = 10
 
     # CHECKS #####
     print()
     print("Password Policy Checks")
+
     print(f".failed login attempts <= {MAX_FAILED_ATTEMPTS}...", end="")
-    if failed_attempts <= MAX_FAILED_ATTEMPTS:
-        print("[green]pass[/green]")
-    else:
-        CHECKS_PASSED = False
-        print("[red]fail[/red]")
+    condition_check(failed_attempts, MAX_FAILED_ATTEMPTS, comparator="<=")
 
     print(f".account lockout duration >= {MIN_LOCKOUT_DURATION}...", end="")
-    if lockout_duration >= MIN_LOCKOUT_DURATION:
-        print("[green]pass[/green]")
-    else:
-        CHECKS_PASSED = False
-        print("[red]fail[/red]")
+    condition_check(lockout_duration, MIN_LOCKOUT_DURATION, comparator=">=")
 
     print(f".max inactive days <= {MAX_INACTIVE_DAYS}...", end="")
-    if inactivity_days <= MAX_INACTIVE_DAYS:
-        print("[green]pass[/green]")
-    else:
-        CHECKS_PASSED = False
-        print("[red]fail[/red]")
+    condition_check(inactivity_days, MAX_INACTIVE_DAYS, comparator="<=")
 
-    print(f".lock inactive accounts == {LOCK_INACTIVE_ACCOUNTS}...", end="")
-    if lock_inactive_accounts == LOCK_INACTIVE_ACCOUNTS:
-        print("[green]pass[/green]")
-    else:
-        CHECKS_PASSED = False
-        print("[red]fail[/red]")
-
-    return CHECKS_PASSED
+    print(f".lock inactive accounts is {LOCK_INACTIVE_ACCOUNTS}...", end="")
+    condition_check(lock_inactive_accounts, LOCK_INACTIVE_ACCOUNTS, comparator="==")
 
 
 def check_users(api_client):
@@ -86,7 +96,8 @@ def check_users(api_client):
 
     # CHECKS #####
     print()
-    print("User checks...", end="")
+    print("User checks:")
+    print(f".only allowed users configured: {CHECK_USERS}...", end="")
     audit_users = set(audit_users)
     if audit_users == CHECK_USERS:
         print("[green]pass[/green]")
@@ -115,10 +126,8 @@ def main():
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
 
-        # Any test fails and will be set to False
-        check_status = True
-        check_status = check_users(api_client) and check_status
-        check_status = check_password_policy(api_client) and check_status
+        check_users(api_client)
+        check_password_policy(api_client)
 
 
 if __name__ == "__main__":
