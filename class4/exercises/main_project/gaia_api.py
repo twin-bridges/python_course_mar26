@@ -12,9 +12,9 @@ def check_password_policy(api_client):
     password_policy = api_res.data
     password_lock = password_policy["lock-settings"]
     password_history = password_policy["password-history"]
-    password_strength = password_policy["password-strength"]
+    # password_strength = password_policy["password-strength"]
     ipdb.set_trace()
-    print(password_lock)
+    print(password_history)
 
     failed_attempts = password_lock["failed-attempts-settings"][
         "failed-attempts-allowed"
@@ -22,22 +22,16 @@ def check_password_policy(api_client):
     lockout_duration = password_lock["failed-attempts-settings"][
         "failed-lock-duration-seconds"
     ]
-    inactivity_days = password_lock["failed-attempts-settings"]["inactivity-settings"][
-        "inactivity-threshold-days"
+    inactivity_days = password_lock["inactivity-settings"]["inactivity-threshold-days"]
+    lock_inactive_accounts = password_lock["inactivity-settings"][
+        "lock-unused-accounts-enabled"
     ]
-
-    #    'inactivity-settings': {
-    #        'inactivity-threshold-days': 365,
-    #        'lock-unused-accounts-enabled': False
-    #    },
-    #    'must-one-time-password-enabled': False,
-    #    'password-expiration-days': 'never',
-    #    'password-expiration-maximum-days-before-lock': 'never',
-    #    'password-expiration-warning-days': 7
 
     CHECKS_PASSED = True
     MAX_FAILED_ATTEMPTS = 10
     MIN_LOCKOUT_DURATION = 600
+    MAX_INACTIVE_DAYS = 365
+    LOCK_INACTIVE_ACCOUNTS = True
 
     # CHECKS #####
     print()
@@ -56,25 +50,21 @@ def check_password_policy(api_client):
         CHECKS_PASSED = False
         print("[red]fail[/red]")
 
+    print(f".max inactive days <= {MAX_INACTIVE_DAYS}...", end="")
+    if inactivity_days <= MAX_INACTIVE_DAYS:
+        print("[green]pass[/green]")
+    else:
+        CHECKS_PASSED = False
+        print("[red]fail[/red]")
+
+    print(f".lock inactive accounts == {LOCK_INACTIVE_ACCOUNTS}...", end="")
+    if lock_inactive_accounts == LOCK_INACTIVE_ACCOUNTS:
+        print("[green]pass[/green]")
+    else:
+        CHECKS_PASSED = False
+        print("[red]fail[/red]")
+
     return CHECKS_PASSED
-
-
-# {
-#    'failed-attempts-settings': {
-#        'failed-attempts-allowed': 10,
-#        'failed-lock-duration-seconds': 1200,
-#        'failed-lock-enabled': False,
-#        'failed-lock-enforced-on-admin': False
-#    },
-#    'inactivity-settings': {
-#        'inactivity-threshold-days': 365,
-#        'lock-unused-accounts-enabled': False
-#    },
-#    'must-one-time-password-enabled': False,
-#    'password-expiration-days': 'never',
-#    'password-expiration-maximum-days-before-lock': 'never',
-#    'password-expiration-warning-days': 7
-# }
 
 
 def check_users(api_client):
