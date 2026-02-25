@@ -38,7 +38,6 @@ def check_password_policy(api_client):
     password_policy = api_res.data
     password_lock = password_policy["lock-settings"]
     password_strength = password_policy["password-strength"]
-    print(password_strength)
 
     failed_attempts = password_lock["failed-attempts-settings"][
         "failed-attempts-allowed"
@@ -75,6 +74,12 @@ def check_password_policy(api_client):
 
     print(f".lock inactive accounts is {LOCK_INACTIVE_ACCOUNTS}...", end="")
     condition_check(lock_inactive_accounts, LOCK_INACTIVE_ACCOUNTS, comparator="==")
+
+    print(f".password char complexity >= {MIN_PWD_CHAR_COMPLEXITY}...", end="")
+    condition_check(password_complexity, MIN_PWD_CHAR_COMPLEXITY, comparator=">=")
+
+    print(f".minimum password length >= {MIN_PWD_LENGTH}...", end="")
+    condition_check(password_min_length, MIN_PWD_LENGTH, comparator=">=")
 
 
 def check_users(api_client):
