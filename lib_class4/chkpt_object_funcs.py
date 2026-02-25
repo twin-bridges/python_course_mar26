@@ -2,7 +2,7 @@ from chkpt_exceptions import ChkPntConfigError
 import ipdb  # noqa
 
 
-def cfg_object(api_client, obj_type, obj_params):
+def cfg_object(api_client, obj_type, obj_params, delete_obj=False):
 
     # Check if object already exists
     object_exists = False
@@ -11,6 +11,10 @@ def cfg_object(api_client, obj_type, obj_params):
 
     if api_res.success:
         object_exists = True
+
+    if delete_obj:
+        payload = {"name": obj_params["name"]}
+        api_res = api_client.api_call(command=f"delete-{obj_type}", payload=payload)
 
     if object_exists:
         # Object already exists, update parameters
@@ -21,7 +25,9 @@ def cfg_object(api_client, obj_type, obj_params):
         api_res = api_client.api_call(command=f"add-{obj_type}", payload=obj_params)
 
     if not api_res.success:
-        msg = f"Failed to configure {obj_type} object: {obj_params}"
+        # Ternary operator (could just use conditional)
+        action = "delete" if delete_obj else "configure"
+        msg = f"Failed to {action} {obj_type} object: {obj_params}"
         raise ChkPntConfigError(msg)
 
 
@@ -29,6 +35,19 @@ def cfg_host_object(api_client, host_object):
     """Create/update a host object."""
     obj_type = "host"
     cfg_object(api_client, obj_type=obj_type, obj_params=host_object)
+
+
+def delete_host_objects(api_client, host_objects):
+    """Delete a list/interable of host objects."""
+    obj_type = "host"
+    for host_obj in host_objects:
+        cfg_object(api_client, obj_type=obj_type, obj_params=host_obj, delete_obj=True)
+
+
+def cfg_group_object(api_client, group_object):
+    """Create/update a host object."""
+    obj_type = "group"
+    cfg_object(api_client, obj_type=obj_type, obj_params=group_object)
 
 
 def cfg_host_objects(api_client, host_objects):

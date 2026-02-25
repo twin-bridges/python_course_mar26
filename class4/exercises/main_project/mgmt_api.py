@@ -58,22 +58,23 @@ def main():
         current_blocked_ips = get_current_blocked_ips(api_client, group_name)
         new_blocked_ips = read_blocked_ips_file()
 
-        # Convert to host object dict using list comprehension
-        blocked_ip_objs = [gen_host_object(ip) for ip in new_blocked_ips]
-
-        # Compare new versus already configured
+        # Compare new versus currently configured blocked IPs
         if set(current_blocked_ips) == set(new_blocked_ips):
             # Nothing to do, current and new already match.
             sys.exit(0)
         else:
-            missing_blocked_ips = set(new_blocked_ips) - set(current_blocked_ips)
+            add_blocked_ips = set(new_blocked_ips) - set(current_blocked_ips)
             remove_blocked_ips = set(current_blocked_ips) - set(new_blocked_ips)
-            print(f"{missing_blocked_ips=}")
+            print(f"{add_blocked_ips=}")
             print(f"{remove_blocked_ips=}")
+
+        # Convert to host object dict using list comprehension
+        blocked_ip_objs = [gen_host_object(ip) for ip in add_blocked_ips]
 
         # Configure host objects for blocked IPs
         cfg_host_objects(api_client, blocked_ip_objs)
 
+        # Update group membership
         blocked_ip_group = {
             "name": "Blocked IPs",
             "members": new_blocked_ips,
