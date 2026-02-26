@@ -1,4 +1,4 @@
-### Chkpnt SDK Exercise1
+### Chkpnt SDK Exercise2
 
 Connect to the Mgmt API using the Chkpnt SDK. Once again I would read your credentials in using the .env file and load_dotenv().
 
