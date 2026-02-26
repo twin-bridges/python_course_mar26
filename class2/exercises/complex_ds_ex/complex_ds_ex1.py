@@ -3,15 +3,15 @@ from rich import print
 import ipdb  # noqa
 
 with open("show_tasks.json") as f:
-    tasks = json.load(f)
+    tasks_ds = json.load(f)
 
 ipdb.set_trace()
-print(tasks)
-print(type(tasks))
-print(tasks.keys())
+print(tasks_ds)
+print(type(tasks_ds))
+print(tasks_ds.keys())
 
 # Remove outermost key
-tasks = tasks["tasks"]
+tasks = tasks_ds["tasks"]
 ipdb.set_trace()
 print(type(tasks))
 print(len(tasks))

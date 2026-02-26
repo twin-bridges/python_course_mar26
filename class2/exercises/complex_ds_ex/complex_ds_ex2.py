@@ -21,10 +21,10 @@ def extract_fields(task):
 
 if __name__ == "__main__":
     filename = "show_tasks.json"
-    tasks = read_json(filename)
+    tasks_ds = read_json(filename)
 
     # Remove outermost key
-    tasks = tasks["tasks"]
+    tasks = tasks_ds["tasks"]
 
     print()
     for task in tasks:
