@@ -35,6 +35,7 @@ def install_fw_policy(api_client, policy_package="Standard", targets=None):
         msg = f"Failed to install firewall policy: {payload}"
         raise ChkPntPolicyInstallError(msg)
 
+
 def cfg_fw_rule(api_client, fw_rule):
     """Use mgmt API to configure a firewall rule."""
 
@@ -55,6 +56,7 @@ def cfg_fw_rule(api_client, fw_rule):
     if not api_res.success:
         msg = f"Failed to configure firewall rule: {fw_rule}"
         raise ChkPntConfigError(msg)
+
 
 def cfg_fw_rules(api_client, fw_rules):
     """Use mgmt API to configure firewall policy rules."""
