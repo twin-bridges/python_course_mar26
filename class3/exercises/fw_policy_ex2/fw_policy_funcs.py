@@ -63,7 +63,7 @@ def cfg_fw_rule(api_client, fw_rule, delete_rule=False):
         raise ChkPntConfigError(msg)
 
 
-def cfg_fw_policy(api_client, fw_rules):
+def cfg_fw_rules(api_client, fw_rules):
     """Use mgmt API to configure firewall policy rules."""
     for fw_rule in fw_rules:
         cfg_fw_rule(api_client, fw_rule)

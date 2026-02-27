@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
 from fw_policy_funcs import (
-    cfg_fw_policy,
+    cfg_fw_rule,
     install_fw_policy,
     display_fw_policy,
 )
@@ -21,18 +21,16 @@ def main():
         "color": "dark green",
     }
 
-    management_rules = [
-        {
-            "layer": "Network",
-            "name": "Corp Web Server Access",
-            "source": "Any",
-            "destination": "Corp Web Server",
-            "service": ["http", "https", "ssh"],
-            "action": "Accept",
-            "position": 1,
-            "comments": "Test rule for Python training session",
-        },
-    ]
+    corp_fw_rule = {
+        "layer": "Network",
+        "name": "Corp Web Server Access",
+        "source": "Any",
+        "destination": "Corp Web Server",
+        "service": ["http", "https", "ssh"],
+        "action": "Accept",
+        "position": 1,
+        "comments": "Test rule for Python training session",
+    }
 
     # This looks for a .env file and loads it
     load_dotenv()
@@ -49,7 +47,7 @@ def main():
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
         cfg_host_object(api_client, corp_web_server)
-        cfg_fw_policy(api_client, fw_rules=management_rules)
+        cfg_fw_rule(api_client, fw_rule=corp_fw_rule)
         api_client.api_call(command="publish")
         install_fw_policy(api_client)
         display_fw_policy(api_client)
