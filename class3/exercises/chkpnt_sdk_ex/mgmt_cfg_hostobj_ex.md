@@ -30,3 +30,9 @@ Your function should do the following:
 You should use the ".success" attribute of the response object to ensure your object was created or updated successfully.
 
 You should raise an exception if the 'add-host' or 'set-host' operation was not successful.
+
+Once your object has been created, you will need to 'publish' it. You can do this by invoking the following:
+
+```python
+api_client.api_call(command="publish")
+```

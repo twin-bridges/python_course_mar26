@@ -56,3 +56,9 @@ You should use the ".success" attribute of the response object to ensure your ob
 
 You should raise an exception if the 'add-network' or 'set-network' operation was not successful.
 
+Once your object has been created, you will need to 'publish' it. You can do this by invoking the following:
+
+```python
+api_client.api_call(command="publish")
+```
+
