@@ -35,25 +35,28 @@ def install_fw_policy(api_client, policy_package="Standard", targets=None):
         msg = f"Failed to install firewall policy: {payload}"
         raise ChkPntPolicyInstallError(msg)
 
+def cfg_fw_rule(api_client, fw_rule):
+    """Use mgmt API to configure a firewall rule."""
 
-def cfg_fw_policy(api_client, fw_rules):
+    # Check if fw_rule already exists
+    obj_exists = False
+    payload = {"layer": fw_rule["layer"], "name": fw_rule["name"]}
+    api_res = api_client.api_call(command="show-access-rule", payload=payload)
+
+    if api_res.success:
+        obj_exists = True
+    if obj_exists:
+        print(f"Updating firewall rule: {fw_rule}")
+        api_res = api_client.api_call(command="set-access-rule", payload=fw_rule)
+    else:
+        print(f"Configuring firewall rule: {fw_rule}")
+        api_res = api_client.api_call(command="add-access-rule", payload=fw_rule)
+
+    if not api_res.success:
+        msg = f"Failed to configure firewall rule: {fw_rule}"
+        raise ChkPntConfigError(msg)
+
+def cfg_fw_rules(api_client, fw_rules):
     """Use mgmt API to configure firewall policy rules."""
-
     for fw_rule in fw_rules:
-        # Check if fw_rule already exists
-        obj_exists = False
-        payload = {"layer": fw_rule["layer"], "name": fw_rule["name"]}
-        api_res = api_client.api_call(command="show-access-rule", payload=payload)
-
-        if api_res.success:
-            obj_exists = True
-        if obj_exists:
-            print(f"Updating firewall rule: {fw_rule}")
-            api_res = api_client.api_call(command="set-access-rule", payload=fw_rule)
-        else:
-            print(f"Configuring firewall rule: {fw_rule}")
-            api_res = api_client.api_call(command="add-access-rule", payload=fw_rule)
-
-        if not api_res.success:
-            msg = f"Failed to configure firewall rule: {fw_rule}"
-            raise ChkPntConfigError(msg)
+        cfg_fw_rule(api_client, fw_rule)

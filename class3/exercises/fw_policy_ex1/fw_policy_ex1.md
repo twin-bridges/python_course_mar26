@@ -20,64 +20,52 @@ corp_web_server = {
 }
 ```
 
-Next create an 'install_fw_policy' function. This function should take at least one argument, the 'api_client'.
+Next create a 'cfg_fw_rule' function. This function should be essentially similar as your previous 'cfg_host_objects' function.
 
-Here is what the function signature looks like for my reference implementation:
+Once again your function should check if the given firewall rule exists (using 'show-access-rul)e. If the rule does already exist, then your script should update the firewall rule using 'set-access-rule'.
+
+If the firewall rule doesn't exist, then it should add the rule using 'add-access-rule'.
+
+You should use the ".success" attribute of the response object to ensure your firewall rule was created or updated successfully.
+
+You should raise an exception if the 'add-access-rule' or 'set-access-rule' operation was not successful.
+
+Note, for the 'show-access-rule' call you only need to pass the "layer" field and the "name" field in as payload to the API call (see the Mgmt API documentation for additional details).
+
+Your firewall rule should be the following:
 
 ```python
-def install_fw_policy(api_client, policy_package="Standard", targets=None):
+    corp_fw_rule = { 
+        "layer": "Network",
+        "name": "Corp Web Server Access",
+        "source": "Any",
+        "destination": "Corp Web Server",
+        "service": ["http", "https"],
+        "action": "Accept",
+        "position": 1,
+    } 
 ```
 
-For the Mgmt API 'install-policy' operation, you will need to provide a payload that specifies the following:
+After you have pushed both the host object and the new firewall rule, you will to both publish and install the firewall policy. In order to do this, you will need to make the following API call.
+
+In order to publish, you can simply invoke the following:
+
+```python
+api_client.api_call(command="publish")
+```
+
+And in order to install the firewall policy, you will need to do something similar to this.
 
 ```python
     payload = {"policy-package": "Standard", "targets": targets}
     api_res = api_client.api_call(command="install-policy", payload=payload)
 ```
 
-'targets' will be your firewall name which will be host part of your pod's FQDN. So for 'chkpnt-pod99.lasthop.io', the firewall targets will be:
+Where 'targets' is your firewall name. So for 'pod99' (host = 'chkpnt-pod99.lasthop.io'), the firewall targets will be:
 
 ```python
 targets = ["chkpnt-pod99"]
 ```
 
-You can decide how you want to implement this targets variable. In other words, you can hard-code it or you can extract it from the FQDN. Similarly, you can decide if you pass it into the function or if it is hard-coded in the function.
+You can decide whether you want to create a function for 'install_fw_policy' or whether you want to just implement it directly in your main program.
 
-##### HERE ######
-
-
-    management_rules = [
-        {
-            "layer": "Network",
-            "name": "Corp Web Server Access",
-            "source": "Any",
-            "destination": "Corp Web Server",
-            "service": ["http", "https"],
-            "action": "Accept",
-            "position": 1,
-        },
-    ]
-
-    # This looks for a .env file and loads it
-    load_dotenv()
-    username = "admin"
-    password = os.environ["CHKP_ADMIN"]
-
-    api_version = "1.8"
-    no_ssl_verify = True
-
-    client_args = APIClientArgs(
-        server=host, api_version=api_version, unsafe=no_ssl_verify, context="web_api"
-    )
-
-    with APIClient(client_args) as api_client:
-        api_client.login(username, password)
-        cfg_host_object(api_client, corp_web_server)
-        cfg_fw_policy(api_client, fw_rules=management_rules)
-        api_client.api_call(command="publish")
-        install_fw_policy(api_client)
-        display_fw_policy(api_client)
-
-
-if __name__ == "__main__":
-    main()
