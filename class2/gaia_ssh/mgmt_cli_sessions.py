@@ -33,7 +33,8 @@ with ConnectHandler(**chkpt_fw) as ssh_conn:
 
     # Capture Session ID
     print("Capture Session ID using 'mgmt_cli'")
-    cmd = f'''mgmt_cli login user "admin" password "{admin_pass}" --format json'''
+    # cmd = f'''mgmt_cli login user "admin" password "{admin_pass}" --format json'''
+    cmd = f'''mgmt_cli login -r true --format json'''
     data = ssh_conn.send_command(cmd)
     d_struct = json.loads(data)
     sid = d_struct["sid"]
@@ -57,7 +58,8 @@ with ConnectHandler(**chkpt_fw) as ssh_conn:
         # The walrus := (assign and evaluate in one operation)
         session_timeout = session["session-timeout"]
         session_uid = session["uid"]
-        changes = session["changes"]
+        # changes = session["changes"]
+        changes = False
         if session_uid == my_session_uid:
             print("Skipping Current Session...")
             continue
@@ -79,8 +81,12 @@ Session Timeout: {session_timeout}
             no_changes = bool(not changes)
             if no_changes and current_time - epoch_create_time < ONE_DAY_MS:
                 # discard would not work.
-                cmd = f'mgmt_cli -r true disconnect uid "{session_uid}"'
+                # cmd = f'mgmt_cli -r true disconnect uid "{session_uid}"'
+                ipdb.set_trace()
+                cmd = f'mgmt_cli take-over-session uid "{session_uid}" force true --session-id "{sid}"'
                 data = ssh_conn.send_command(cmd)
+                cmd = f'mgmt_cli discard --session-id "{sid}"'
+                data += ssh_conn.send_command(cmd)
                 print("\n>>> Terminating Session >>>")
                 print(session_uid)
                 print(data)

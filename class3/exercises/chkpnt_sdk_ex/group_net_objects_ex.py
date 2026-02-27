@@ -28,7 +28,7 @@ def cfg_group_objects(api_client):
     }
 
     for params in (group_params,):
-        ipdb.set_trace()
+        # ipdb.set_trace()
         # Check if object already exists
         obj_exists = False
         payload = {"name": params["name"]}

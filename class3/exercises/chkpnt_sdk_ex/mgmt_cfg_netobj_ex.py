@@ -58,7 +58,7 @@ def cfg_net_objects(api_client):
         params["mask-length"] = 24
         params["color"] = "green"
 
-        ipdb.set_trace()
+        # ipdb.set_trace()
         # Check if object already exists
         obj_exists = False
         payload = {"name": params["name"]}
