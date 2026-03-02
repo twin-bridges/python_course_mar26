@@ -31,6 +31,7 @@ res = requests.get(url, headers=headers, verify=False)
 print()
 print(url)
 print(res)
+print(res.json())
 
 # Delete the token
 endpoint = f"tokens/{token}/"
