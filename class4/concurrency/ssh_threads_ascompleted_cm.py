@@ -23,5 +23,6 @@ if __name__ == "__main__":
         # Process as completed
         for future in as_completed(future_list):
             print("Result: " + future.result())
-            end_time = datetime.now()
-            print(end_time - start_time)
+
+        end_time = datetime.now()
+        print(end_time - start_time)
