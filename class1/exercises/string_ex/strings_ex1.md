@@ -3,10 +3,10 @@
 Use the .split() method to divide the following:
 
 1. 198.51.100.0/24 (divide the network from the mask and create a separate variable for each).
-    a. Further subdivide the IPv4 address into octets.
-    b. Print out the ipv4_network, ipv4_mask, and all four octets.
-    c. Use f-strings and 4 x 15-character columns to print out each octet.
-    d. Center the octets in their column.
+    * Further subdivide the IPv4 address into octets.
+    * Print out the ipv4_network, ipv4_mask, and all four octets.
+    * Use f-strings and 4 x 15-character columns to print out each octet.
+    * Center the octets in their column.
 2. 2001:db8:1:1::/64 (divide the network from the mask and create a separate variable for each).
     a. Further subdivide the IPv6 address into hextets.
     b. Print out the ipv6_network, ipv6_mask, and all four hextets.
