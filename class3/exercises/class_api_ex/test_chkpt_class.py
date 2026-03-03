@@ -23,7 +23,7 @@ def gaia_test():
 
     print()
     print("*" * 40)
-    print(f"--- Gaia Class Test ---")
+    print("--- Gaia Class Test ---")
     print(res.json())
     print("*" * 40)
     print()
@@ -47,7 +47,7 @@ def mgmt_test():
 
     print()
     print("*" * 40)
-    print(f"--- Mgmt Class Test ---")
+    print("--- Mgmt Class Test ---")
     print(res.json())
     print("*" * 40)
     print()

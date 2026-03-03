@@ -4,13 +4,13 @@ from rich import print  # noqa
 import ipdb  # noqa
 
 
-class GaiaAuthError(Exception):
+class ChkptAuthError(Exception):
     """Exception raised when the session ID is missing or expired."""
 
     pass
 
 
-class GaiaLogoutError(Exception):
+class ChkptLogoutError(Exception):
     """Raised when the API returns a failure during the logout process."""
 
     pass
@@ -61,8 +61,8 @@ class ChkptAPI:
             if "X-chkp-sid" in self.headers:
                 self.headers.pop("X-chkp-sid")
         else:
-            msg = "Failed to 'logout' from Gaia API"
-            raise GaiaLogoutError(msg)
+            msg = "Failed to 'logout' from Check Point API"
+            raise ChkptLogoutError(msg)
 
     def call(self, endpoint, payload=None):
         url = self.base_url + endpoint
@@ -73,7 +73,7 @@ class ChkptAPI:
 Session ID not set, please call '.login()' method and properly 
 authenticate to the API.
 """
-            raise GaiaAuthError(msg)
+            raise ChkptAuthError(msg)
 
         response = requests.post(
             url, data=json.dumps(payload), headers=self.headers, verify=self.ssl_verify
