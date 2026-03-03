@@ -8,10 +8,10 @@ Use the .split() method to divide the following:
     * Use f-strings and 4 x 15-character columns to print out each octet.
     * Center the octets in their column.
 2. 2001:db8:1:1::/64 (divide the network from the mask and create a separate variable for each).
-    a. Further subdivide the IPv6 address into hextets.
-    b. Print out the ipv6_network, ipv6_mask, and all four hextets.
-    c. Use f-strings and 4 x 15-character columns to print out each hextet.
-    d. Center the hextets in their column.
+    * Further subdivide the IPv6 address into hextets.
+    * Print out the ipv6_network, ipv6_mask, and all four hextets.
+    * Use f-strings and 4 x 15-character columns to print out each hextet.
+    * Center the hextets in their column.
 
 Example output
 ```shell
