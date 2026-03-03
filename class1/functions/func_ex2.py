@@ -1,8 +1,8 @@
-
 def my_func(x, y):
     print(f"{x=}")
     print(f"{y=}")
     return x + y
+
 
 print()
 ret_val = my_func(x=7, y=2)
