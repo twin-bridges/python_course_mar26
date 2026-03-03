@@ -11,3 +11,4 @@ my_dict = {
     "z": 33,
 }
 ret_val = my_func(**my_dict)
+print(ret_val)
