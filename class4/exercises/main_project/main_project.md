@@ -31,3 +31,25 @@ Call the Netmiko .save_config() method to ensure that you properly save these ch
 
 Re-run your Gaia auditing script and see how the above changes modify the earlier failures in your auditing script.
 
+### Mgmt API
+TODO: add pathlib for blocked IPs file?
+TODO: explain sets
+
+Using Python connect to the management API of your pod. Create a function that uses the management API and the 'show-group' API endpoint to retrieve the current group membership of the "Blocked IPs" group.
+
+If the "Blocked IPs" group does not exist, then your function should return an empty list or an empty set.
+
+Create a function that reads in the "blocked_ips.txt" file.
+
+Compare the current blocked IPs (in other words the current members of "Blocked IPs" group) to the new blocked IPs (the blocked IPs read in from the file). Note, you probably will want to use sets for this comparison.
+
+If the sets are different, determine the blocked IPs that need to be added (blocked IPs that are in the file, but not currently specified as group members) and the blocked IPs that need to be removed (current members of the Blocked IPs group that do not exist in the "blocked_ips.txt" file).
+
+Create a function that configures host objects for each of the new blocked IPs (blocked IPs to be added).
+
+Create a function that configures the group object and updates the membership to match the "blocked_ips.txt" file.
+
+Create a function that removes all of the host objects that used to be members, but are no longer in the Blocked IPs group and are no longer in the blocked_ips.txt file.
+
+Publish your changes via the mgmt API.
+
