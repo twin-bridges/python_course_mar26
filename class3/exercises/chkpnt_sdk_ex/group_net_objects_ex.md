@@ -1,6 +1,6 @@
 ### Chkpnt SDK Exercise3
 
-Connect to the Mgmt API using the Chkpnt SDK. Once again I would read your credentials in using the .env file and load_dotenv().
+Connect to the Mgmt API using the Chkpnt SDK. Read your credentials in using the .env file and load_dotenv().
 
 Create a new function named 'cfg_group' that is based upon your previously created 'cfg_net_objects' function.
 
@@ -24,9 +24,9 @@ This function should create the following group object:
 
 ```
 
-Once again your function should check if the group object exists (using 'show-group). If it does already exist, then it should update the network object using 'set-group'.
+Once again your function should check if the group object exists (using the 'show-group' endpoint). If the object does already exist, then you should update the group using the 'set-group' endpoint.
 
-If the object doesn't exist, then it should add it using 'add-group'.
+If the object doesn't exist, then you should add it using the 'add-group' endpoint.
 
 You should use the ".success" attribute of the response object to ensure your object was created or updated successfully.
 

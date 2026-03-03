@@ -1,6 +1,6 @@
 ### Chkpnt SDK Exercise2
 
-Connect to the Mgmt API using the Chkpnt SDK. Once again I would read your credentials in using the .env file and load_dotenv().
+Connect to the Mgmt API using the Chkpnt SDK. Read your credentials in using the .env file and load_dotenv().
 
 Create a new function named 'cfg_net_objects' that is based upon your previously created 'cfg_host_objects' function.
 
@@ -41,16 +41,16 @@ This function should create the following network objects:
     }
 ```
 
-For each of these networks you should also specify the following (i.e. the mask-length is always /24 and the object color is always green.
+For each of these networks you should also specify the following (i.e. the mask-length for these networks is always a /24 and the object color is always green).
 
 ```python
         network_obj["mask-length"] = 24
         network_obj["color"] = "green"
 ```
 
-Once again your function should check if the given network object exists (using 'show-network). If it does already exist, then it should update the network object using 'set-network'.
+Once again your function should check if the given network object exists (using the 'show-network' endpoint). If the object does already exist, then you should update the network object using the 'set-network' endpoint.
 
-If the network object doesn't exist, then it should add it using 'add-network'.
+If the network object doesn't exist, then you should add the object using the 'add-network' endpoint.
 
 You should use the ".success" attribute of the response object to ensure your object was created or updated successfully.
 

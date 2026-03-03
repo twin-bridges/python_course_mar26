@@ -1,6 +1,6 @@
 ### Chkpnt SDK Exercise1
 
-Connect to the Mgmt API using the Chkpnt SDK. Once again I would read your credentials in using the .env file and load_dotenv().
+Connect to the Mgmt API using the Chkpnt SDK. You should read your API credentials in using the .env file and load_dotenv().
 
 Create a function named 'cfg_host_objects'  that takes one argument (api_client). In this function configure the following three host objects:
 
@@ -23,9 +23,9 @@ Create a function named 'cfg_host_objects'  that takes one argument (api_client)
 ```
 
 Your function should do the following:
-1. Use 'show-host' and the object name to see if the object already exists.
-2. If the object already exists, then use 'set-host' to update the host object using the dictionaries provided above.
-3. If the object doesn't exist, then use 'add-host' to create the given host object.
+1. Use the 'show-host' endpoint and the object name to see if the object already exists.
+2. If the object already exists, then use the 'set-host' endpoint to update the host object (using the dictionaries provided above).
+3. If the object doesn't exist, then use the 'add-host' endpoint to create the given host object.
 
 You should use the ".success" attribute of the response object to ensure your object was created or updated successfully.
 
