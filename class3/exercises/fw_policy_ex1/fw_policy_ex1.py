@@ -35,7 +35,7 @@ def main():
     username = "admin"
     password = os.environ["CHKP_ADMIN"]
 
-    api_version = "1.8"
+    api_version = "2"
     no_ssl_verify = True
 
     client_args = APIClientArgs(
