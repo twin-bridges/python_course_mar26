@@ -15,11 +15,11 @@ firewalls_file = (
 )
 ```
 
-Next verify the 'firewalls_file' exists and is a file.
+Next using your Pathlib Path object, verify the 'firewalls_file' exists and is a file.
 
-Extract the parent directory (i.e. the directory that contains the file 'firewalls.yml' and verify this directory exists and is in fact a directory.
+Extract the parent directory (i.e. the directory that contains the file 'firewalls.yml') and verify this directory exists and is a directory.
 
-Use the 'yaml' library to read in the contents of this 'firewalls_file' as YAML. Print out the contents of that file (it should be a list of firewalls).
+Use the 'yaml' library to read in the contents of this 'firewalls_file' as YAML. Print the contents of this file (it should be a list of firewalls).
 
 Next use pathlib to create the following directory. You can use code similar to the following:
 
@@ -32,5 +32,5 @@ if not work_dir.exists():
 
 Now add on the following two firewalls to your list of firewalls: ["ber-fw1", "ber-fw2"] 
 
-Finally, create a new "firewalls.yml" file inside the 'work_dir' that you created above. Once again use pathlib and the YAML library to accomplish this.
+Finally, create a new "firewalls.yml" file inside your new 'work_dir'. Once again use pathlib and the YAML library to accomplish this.
 

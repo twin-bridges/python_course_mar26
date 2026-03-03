@@ -1,6 +1,6 @@
 ### Gaia SSH Exercise1
 
-Connect to your lab pod using Netmiko. You will need to use an SSH key to connect. This will require the following Netmiko arguments:
+Connect to your lab pod using Netmiko. You will need to use an SSH key to connect. This connection will require the following Netmiko arguments:
 
 ```python
 chkpt_fw = {

@@ -41,7 +41,7 @@ cmd = f'mgmt_cli show-objects type "address-range" --session-id "{sid}" --format
 data = ssh_conn.send_command(cmd)
 ```
 
-Capture these Address Range Objects and extract them from the returned data structure.
+Capture the above address range objects and extract them from the returned data structure. The mgmt_cli is returning a JSON string which can convert to Python data structures using 'json.loads(data)'.
 
 Extract the following fields from each of the address range objects: name, ipv4-address-first, ipv4-address-last. 
 

@@ -1,6 +1,6 @@
 ### Gaia 'show arp' Exercise
 
-Repeat the Gaia authentication code that you had in the previous exercise.
+Repeat the Gaia authentication code from the Gaia authentication exercise.
 
 In this script, use your authenticated Gaia session to execute 'show arp'. Retreive the ARP response from the firewall and process the ARP table.
 
