@@ -1,8 +1,8 @@
 ### Mgmt API Exercise
 
-Reusing the code you created for the Gaia API authentication (with slight modifications of the base_url), connect and authentication to the Mgmt API of your pod.
+Reusing the code you created for the Gaia API authentication exercise (with slight modifications of the base_url), connect and authentication to the Mgmt API of your pod.
 
-After authenticating, connect to the "show-gateway-capabilities" endpoint and retrieve the JSON payload from this reponse.
+After authenticating connect to the "show-gateway-capabilities" endpoint and retrieve the JSON payload from this reponse.
 
 From the returned data structure extract and print out the Supported OS Versions and also extract and print out the LightSpeed supported hardware.
 
