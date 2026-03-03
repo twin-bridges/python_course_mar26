@@ -1,6 +1,6 @@
 ### List Exercise1
 
-1. Read in the file "locations.yml" as YAML (this should return a list). Use 'yaml.save_load(f)' to do this.
+1. Read in the file "locations.yml" as YAML (this should return a list). Use 'yaml.safe_load(f)' to do this.
 2. Print out this list.
 3. Print first element of the list.
 4. Print last element of the list.
