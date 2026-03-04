@@ -97,6 +97,7 @@ def cfg_fw_policy(api_client):
 
 
 def main():
+    # CHANGE (for each pod) #####
     host = "chkpnt-pod99.lasthop.io"
 
     # This looks for a .env file and loads it
@@ -104,7 +105,7 @@ def main():
     username = "admin"
     password = os.environ["CHKP_ADMIN"]
 
-    api_version = "1.8"
+    api_version = "2"
     no_ssl_verify = True
 
     client_args = APIClientArgs(
