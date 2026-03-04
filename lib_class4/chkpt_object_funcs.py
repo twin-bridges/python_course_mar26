@@ -41,10 +41,12 @@ def cfg_host_object(api_client, host_object):
     obj_type = "host"
     cfg_object(api_client, obj_type=obj_type, obj_params=host_object)
 
+
 def delete_host_object(api_client, host_object):
     """Wrapper for better naming."""
     obj_type = "host"
     cfg_object(api_client, obj_type=obj_type, obj_params=host_object, delete_obj=True)
+
 
 def delete_host_objects(api_client, host_objects):
     """Delete a list/interable of host objects."""
