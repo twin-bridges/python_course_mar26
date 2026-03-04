@@ -1,5 +1,4 @@
 import os
-import sys
 import ipdb  # noqa
 from rich import print  # noqa
 from dotenv import load_dotenv
@@ -78,7 +77,7 @@ def cfg_blocked_ips(api_client):
     # Compare new versus currently configured blocked IPs
     if set(current_blocked_ips) == set(new_blocked_ips):
         # Nothing to do, current and new already match.
-        sys.exit(0)
+        return
     else:
         add_blocked_ips = set(new_blocked_ips) - set(current_blocked_ips)
         remove_blocked_ips = set(current_blocked_ips) - set(new_blocked_ips)
