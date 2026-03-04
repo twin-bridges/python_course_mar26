@@ -2,7 +2,7 @@
 
 Repeat the Gaia authentication code from the Gaia authentication exercise.
 
-In this script, use your authenticated Gaia session to execute 'show arp'. Retreive the ARP response from the firewall and process the ARP table.
+In this script, use your authenticated Gaia session to execute 'show-arp'. Retreive the ARP response from the firewall and process the ARP table.
 
 From the ARP response, you should extract both the 'mac-address' and the 'ipv4-address'. You should then print this data to standard output.
 
