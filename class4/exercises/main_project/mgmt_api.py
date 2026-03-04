@@ -5,35 +5,52 @@ from rich import print  # noqa
 from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
 from chkpt_object_funcs import cfg_host_objects, cfg_group_object, delete_host_objects
+from blocked_ip_funcs import (
+    read_blocked_ips_file,
+    gen_host_object,
+    get_current_blocked_ips,
+)
 
 
-def read_blocked_ips_file():
-    # Retrieve the 'new' blocked IPs
-    with open("blocked_ips.txt") as f:
-        new_blocked_ips = f.readlines()
-        # strip trailing newline w/ list comprehension
-        new_blocked_ips = [ip.strip() for ip in new_blocked_ips]
-        return new_blocked_ips
+def cfg_blocked_ips(api_client):
+    """
+    Configure 'Blocked IPs' from blocked_ips.txt file.
 
+    Add new blocked IP host objects
+    Upgraded 'Blocked IPs' group membership
+    Remove obsolete blocked IP host objects
+    """
 
-def gen_host_object(ip_addr):
-    return {
-        "name": ip_addr,
-        "ipv4-address": ip_addr,
-        "color": "black",
+    group_name = "Blocked IPs"
+    current_blocked_ips = get_current_blocked_ips(api_client, group_name)
+    new_blocked_ips = read_blocked_ips_file()
+
+    # Compare new versus currently configured blocked IPs
+    if set(current_blocked_ips) == set(new_blocked_ips):
+        # Nothing to do, current and new already match.
+        sys.exit(0)
+    else:
+        add_blocked_ips = set(new_blocked_ips) - set(current_blocked_ips)
+        remove_blocked_ips = set(current_blocked_ips) - set(new_blocked_ips)
+        print(f"{add_blocked_ips=}")
+        print(f"{remove_blocked_ips=}")
+
+    # Convert to host object dict using list comprehension
+    blocked_ip_objs = [gen_host_object(ip) for ip in add_blocked_ips]
+    delete_ip_objs = [gen_host_object(ip) for ip in remove_blocked_ips]
+
+    # Configure host objects for blocked IPs
+    cfg_host_objects(api_client, blocked_ip_objs)
+
+    # Update group membership
+    blocked_ip_group = {
+        "name": "Blocked IPs",
+        "members": new_blocked_ips,
     }
+    cfg_group_object(api_client, blocked_ip_group)
 
-
-def get_current_blocked_ips(api_client, group_name):
-    """Retrieve current Blocked IPs group membership."""
-    current_blocked_ips = []
-    api_res = api_client.api_call(command="show-group", payload={"name": group_name})
-    if api_res.success:
-        current_blocked_ips = api_res.data["members"]
-
-    # Retrieve only names / use list comprehension
-    cur_blocked_ip_names = [bl_obj["name"] for bl_obj in current_blocked_ips]
-    return cur_blocked_ip_names
+    # Remove unused host objects (must come after group membership update)
+    delete_host_objects(api_client, delete_ip_objs)
 
 
 def main():
@@ -54,36 +71,7 @@ def main():
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
 
-        group_name = "Blocked IPs"
-        current_blocked_ips = get_current_blocked_ips(api_client, group_name)
-        new_blocked_ips = read_blocked_ips_file()
-
-        # Compare new versus currently configured blocked IPs
-        if set(current_blocked_ips) == set(new_blocked_ips):
-            # Nothing to do, current and new already match.
-            sys.exit(0)
-        else:
-            add_blocked_ips = set(new_blocked_ips) - set(current_blocked_ips)
-            remove_blocked_ips = set(current_blocked_ips) - set(new_blocked_ips)
-            print(f"{add_blocked_ips=}")
-            print(f"{remove_blocked_ips=}")
-
-        # Convert to host object dict using list comprehension
-        blocked_ip_objs = [gen_host_object(ip) for ip in add_blocked_ips]
-        delete_ip_objs = [gen_host_object(ip) for ip in remove_blocked_ips]
-
-        # Configure host objects for blocked IPs
-        cfg_host_objects(api_client, blocked_ip_objs)
-
-        # Update group membership
-        blocked_ip_group = {
-            "name": "Blocked IPs",
-            "members": new_blocked_ips,
-        }
-        cfg_group_object(api_client, blocked_ip_group)
-
-        # Remove unused host objects (must come after group membership update)
-        delete_host_objects(api_client, delete_ip_objs)
+        cfg_blocked_ips(api_client)
 
         api_client.api_call(command="publish")
 
