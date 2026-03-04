@@ -15,12 +15,11 @@ def test_negative_sums():
     "val1, val2, result", [(10, 5, 15), (-1, 1, 0), (0, 0, 0), (100, 200, 300)]
 )
 def test_addition(val1, val2, result):
-
     assert simple_sum(val1, val2) == result
 
 
 @pytest.mark.slow
-def test_negative_sums():
+def test_sums2():
     assert simple_sum(100, 1) == 101
     assert simple_sum(1001, 1) == 1002
     assert simple_sum(1, 1) == 2

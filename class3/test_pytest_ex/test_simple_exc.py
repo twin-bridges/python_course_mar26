@@ -1,4 +1,3 @@
-
 import pytest
 from some_funcs import simple_div
 

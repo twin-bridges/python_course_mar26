@@ -18,10 +18,8 @@ def web_api_session():
         server=api_server, api_version=api_version, unsafe=True, context="web_api"
     )
 
-    api_client = APIClient(client_args)
-    api_client.login(username, password)
-    # Object that is passed to the tests
-    yield api_client
+    with APIClient(client_args) as api_client:
+        api_client.login(username, password)
 
-    # Logout (a bit ugly since no context-manager)
-    api_client.__exit__(None, None, None)
+        # Object that is passed to the tests
+        yield api_client
