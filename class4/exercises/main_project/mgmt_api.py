@@ -12,7 +12,23 @@ from blocked_ip_funcs import (
 from chkpt_policy_funcs import cfg_fw_rules, install_fw_policy, extract_fw_name
 
 
-def cfg_mgmt_fw_rules(api_client, fw_name):
+def gen_blockedip_fw_rules(api_client):
+    blacklisted_ips = [
+        {
+            "layer": "Network",
+            "name": "Blacklisted IPs",
+            "source": "Blocked IPs",
+            "destination": "Any",
+            "service": "Any",
+            "action": "Drop",
+            "position": 3,
+        },
+    ]
+
+    return blacklisted_ips
+
+
+def gen_mgmt_fw_rules(api_client, fw_name):
     management_rules = [
         {
             "layer": "Network",
@@ -37,7 +53,8 @@ def cfg_mgmt_fw_rules(api_client, fw_name):
             "position": 2,
         },
     ]
-    cfg_fw_rules(api_client, fw_rules=management_rules)
+
+    return management_rules
 
 
 def cfg_std_mgmt_hosts(api_client):
@@ -123,11 +140,12 @@ def main():
 
         cfg_blocked_ips(api_client)
         cfg_std_mgmt_hosts(api_client)
-        cfg_mgmt_fw_rules(api_client, fw_name)
+        fw_rules = gen_mgmt_fw_rules(api_client, fw_name)
+        fw_rules = gen_blockedip_fw_rules(api_client) + fw_rules
+        cfg_fw_rules(api_client, fw_rules=fw_rules)
 
         api_client.api_call(command="publish")
-
-        install_fw_policy(api_client, targets=fw_name)
+        # install_fw_policy(api_client, targets=fw_name)
 
 
 if __name__ == "__main__":
