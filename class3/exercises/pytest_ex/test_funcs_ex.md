@@ -1,5 +1,11 @@
 ### pytest exercise1
 
+You will need to use pip to install pytest into your Python virtual environment.
+
+```bash
+pip install pytest==9.0.2
+```
+
 Create a Python file named 'simple_funcs.py'. Inside this file, define the following function:
 
 ```python
