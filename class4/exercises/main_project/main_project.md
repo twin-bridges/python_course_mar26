@@ -1,5 +1,12 @@
 ### Main Project
 
+# NEEDS more to be done
+# mgmt_cli session mgmt?
+# more configure work gaia DNS settings via API, DNS domain via SSH
+# FW policy, add Blocked IPs, to policy via mgmt API. If I reset the    XXXX
+# FW you would also need to add the host objects for mgmt itself.
+# Use main Python script and subprocess to coordinate actions  XXXXX
+
 ### Gaia API
 
 Using the Gaia API and the Checkpoint SDK create an auditing script for your pod that checks the following.
