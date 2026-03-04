@@ -1,4 +1,5 @@
 import pytest
+import sys
 from some_funcs import simple_sum, simple_div
 
 
@@ -28,3 +29,11 @@ def test_sums2():
 def test_exception():
     with pytest.raises(ZeroDivisionError):
         simple_div(10, 0)
+
+
+@pytest.mark.skipif(
+    sys.version_info.major == 3 and sys.version_info.minor == 13,
+    reason="Skip test on PY3.13",
+)
+def test_skip_example():
+    assert simple_sum(-7, 7) == 0
