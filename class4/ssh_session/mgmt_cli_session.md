@@ -1,6 +1,6 @@
 ### Part1: Mgmt CLI Exercise
 
-Using your pod and Netmiko SSH, connect to your pod and enter expert mode.
+Using your pod and Netmiko SSH connect to your pod and enter expert mode.
 
 Create a function named 'mgmt_cli_auth' with the following function signature:
 
@@ -28,8 +28,8 @@ Create a conftest.py file and a fixture named 'ssh_conn'. Your fixture should es
 Next create pytest test file named "test_mgmt_cli_auth.py". In this test file you should test the 'mgmt_cli_auth' function.
 
 You should test the following test cases:
-1. If you provide invalid username and password, then you should receive a KeyError exception.
-2. If you provide valid credentials to the function, then you should receive a session_id that is 43 characters long.
+1. If you provide an invalid username and password, then you should receive a KeyError exception.
+2. If you provide valid credentials, then you should receive a session_id that is 43 characters long.
 
 You should ensure your tests pass successfully.
 
