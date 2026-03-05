@@ -1,9 +1,9 @@
 # Main Project
 
-# TODO: Just add in here the 3 managment host objects and the corresponding firewall policy for them (i.e. have the students do this).
-# TODO: Add a py.test fixture for the 3 management hosts and for the firewall policy containing these 3 hosts.
-# TODO: push firewall polilcy for Blocked IPs
-# TODO: add pathlib for blocked IPs file and push this file to a shared location like /tmp
+TODO: Just add in here the 3 managment host objects and the corresponding firewall policy for them (i.e. have the students do this).
+TODO: Add a py.test fixture for the 3 management hosts and for the firewall policy containing these 3 hosts.
+TODO: push firewall polilcy for Blocked IPs
+TODO: add pathlib for blocked IPs file and push this file to a shared location like /tmp
 
 ### Gaia Configuration using API
 
