@@ -57,9 +57,9 @@ Create a Python script that uses the Mgmt API and configures a set of blocked IP
 The script should do the following:
 1. Retrieves the current "Blocked IPs" group and extracts all the member hosts. This query must handle the case then the "Blocked IPs" group doesn't exist.
 2. Compares the currently configured blocked IPs (the group members) to the new blocked IPs (from the text file).
-3. Adds any missing new blocked IPs as host objects.
+3. Adds any missing new blocked IPs as host objects. You should use the IP address as the host object name.
 4. Updates the group membership to match the blocked IPs from the text file.
-5. Removes any blocked IP host objects that are no longer used (previous group members, but no longer in the "blocked_ips.txt" file).
+5. Remove any blocked IP host objects that are no longer used (previous group members, but no longer in the "blocked_ips.txt" file).
 
 Publish your changes.
 
@@ -109,8 +109,8 @@ fw_rules = [
 ### Pytest Fixtures
 
 Create three pytest fixtures:
-1. pytest fixture that establishes a "gaia_api" connection.
-2. pytest fixture that establishes a "mgmt_api" connection.
+1. pytest fixture that establishes a Gaia Api connection.
+2. pytest fixture that establishes a Mgmt Api connection.
 3. pytest fixture that establishes a Netmiko-SSH connection.
 
 
