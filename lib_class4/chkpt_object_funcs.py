@@ -1,6 +1,7 @@
 from chkpt_exceptions import ChkPntConfigError
 import ipdb  # noqa
 
+DEBUG = False
 
 def cfg_object(api_client, obj_type, obj_params, delete_obj=False):
 
@@ -23,10 +24,10 @@ def cfg_object(api_client, obj_type, obj_params, delete_obj=False):
 
     if object_exists:
         # Object already exists, update parameters
-        print(f"Updating {obj_type} object: {obj_params}")
+        DEBUG and print(f"Updating {obj_type} object: {obj_params}")
         api_res = api_client.api_call(command=f"set-{obj_type}", payload=obj_params)
     else:
-        print(f"Configuring {obj_type} object: {obj_params}")
+        DEBUG and print(f"Configuring {obj_type} object: {obj_params}")
         api_res = api_client.api_call(command=f"add-{obj_type}", payload=obj_params)
 
     if not api_res.success:

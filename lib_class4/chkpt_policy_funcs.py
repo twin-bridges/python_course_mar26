@@ -2,6 +2,7 @@ from chkpt_exceptions import ChkPntConfigError, ChkPntPolicyInstallError
 from rich import print
 import ipdb  # noqa
 
+DEBUG = False
 
 def extract_fw_name(fqdn):
     # Extract the fw_name from the DNS name
@@ -47,10 +48,10 @@ def cfg_fw_rule(api_client, fw_rule):
     if api_res.success:
         obj_exists = True
     if obj_exists:
-        print(f"Updating firewall rule: {fw_rule}")
+        DEBUG and print(f"Updating firewall rule: {fw_rule}")
         api_res = api_client.api_call(command="set-access-rule", payload=fw_rule)
     else:
-        print(f"Configuring firewall rule: {fw_rule}")
+        DEBUG and print(f"Configuring firewall rule: {fw_rule}")
         api_res = api_client.api_call(command="add-access-rule", payload=fw_rule)
 
     if not api_res.success:

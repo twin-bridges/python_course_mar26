@@ -11,6 +11,7 @@ from blocked_ip_funcs import (
 )
 from chkpt_policy_funcs import cfg_fw_rules, install_fw_policy, extract_fw_name
 
+DEBUG = False
 
 def gen_blockedip_fw_rules(api_client):
     blacklisted_ips = [
@@ -58,6 +59,7 @@ def gen_mgmt_fw_rules(api_client, fw_name):
 
 
 def cfg_std_mgmt_hosts(api_client):
+    print("[green][Mgmt API Config][/green] Configure Management Hosts")
     smart_console_private = {
         "name": "Windows SmartConsole",
         "ipv4-address": "172.31.12.101",
@@ -94,18 +96,21 @@ def cfg_blocked_ips(api_client):
     # Compare new versus currently configured blocked IPs
     if set(current_blocked_ips) == set(new_blocked_ips):
         # Nothing to do, current and new already match.
+        print("[green][Mgmt API Config][/green] No Blocked IP Changes")
         return
     else:
         add_blocked_ips = set(new_blocked_ips) - set(current_blocked_ips)
         remove_blocked_ips = set(current_blocked_ips) - set(new_blocked_ips)
-        print(f"{add_blocked_ips=}")
-        print(f"{remove_blocked_ips=}")
+        if DEBUG:
+            print(f"{add_blocked_ips=}")
+            print(f"{remove_blocked_ips=}")
 
     # Convert to host object dict using list comprehension
     blocked_ip_objs = [gen_host_object(ip) for ip in add_blocked_ips]
     delete_ip_objs = [gen_host_object(ip) for ip in remove_blocked_ips]
 
     # Configure host objects for blocked IPs
+    print("[green][Mgmt API Config][/green] Configure Blocked IP Host Objects")
     cfg_host_objects(api_client, blocked_ip_objs)
 
     # Update group membership
@@ -113,9 +118,11 @@ def cfg_blocked_ips(api_client):
         "name": "Blocked IPs",
         "members": new_blocked_ips,
     }
+    print("[green][Mgmt API Config][/green] Configure Blocked IPs Group")
     cfg_group_object(api_client, blocked_ip_group)
 
     # Remove unused host objects (must come after group membership update)
+    print("[green][Mgmt API Config][/green] Remove Old Blocked IP Host Objects")
     delete_host_objects(api_client, delete_ip_objs)
 
 
@@ -137,15 +144,17 @@ def main():
 
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
-
-        cfg_blocked_ips(api_client)
         cfg_std_mgmt_hosts(api_client)
+        cfg_blocked_ips(api_client)
+
         fw_rules = gen_mgmt_fw_rules(api_client, fw_name)
         fw_rules = gen_blockedip_fw_rules(api_client) + fw_rules
+        print("[green][Mgmt API Config][/green] Configure Firewall Rules")
         cfg_fw_rules(api_client, fw_rules=fw_rules)
 
+        print("[green][Mgmt API Config][/green] Publish")
         api_client.api_call(command="publish")
-        install_fw_policy(api_client, targets=fw_name)
+        # install_fw_policy(api_client, targets=fw_name)
 
 
 if __name__ == "__main__":
