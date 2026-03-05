@@ -21,7 +21,7 @@ def gen_blockedip_fw_rules(api_client):
             "destination": "Any",
             "service": "Any",
             "action": "Drop",
-            "position": 3,
+            "position": 1,
         },
     ]
 
@@ -41,7 +41,7 @@ def gen_mgmt_fw_rules(api_client, fw_name):
             "destination": fw_name,
             "service": "Any",
             "action": "Accept",
-            "position": 1,
+            "position": 2,
         },
         {
             "layer": "Network",
@@ -50,7 +50,7 @@ def gen_mgmt_fw_rules(api_client, fw_name):
             "destination": fw_name,
             "service": "SSH",
             "action": "Accept",
-            "position": 2,
+            "position": 3,
         },
     ]
 
@@ -145,7 +145,7 @@ def main():
         cfg_fw_rules(api_client, fw_rules=fw_rules)
 
         api_client.api_call(command="publish")
-        # install_fw_policy(api_client, targets=fw_name)
+        install_fw_policy(api_client, targets=fw_name)
 
 
 if __name__ == "__main__":

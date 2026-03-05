@@ -1,11 +1,12 @@
 ### Main Project
 
-# TODO: Push management host objects and firewall policy for management host objects to all the pods.
-# TODO: Expand mgmt_api reference script to push firewall polilcy for Blocked IPs
-# TODO: add pathlib for blocked IPs file?
+# TODO: Configure Gaia DNS settings and check them using py.test
+# TODO: Configure a static route and check them using py.test
+# TODO: Just add in here the 3 managment host objects and the corresponding firewall policy for them (i.e. have the students do this).
+# TODO: Add a py.test fixture for the 3 management hosts and for the firewall policy containing these 3 hosts.
+# TODO: push firewall polilcy for Blocked IPs
+# TODO: add pathlib for blocked IPs file and push this file to a shared location like /tmp
 
-# ???
-# Use main Python script and subprocess to coordinate actions  XXXXX
 
 ### Gaia API
 
