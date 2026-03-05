@@ -1,10 +1,10 @@
 ### Main Project
 
-# NEEDS more to be done
-# mgmt_cli session mgmt?
-# more configure work gaia DNS settings via API, DNS domain via SSH
-# FW policy, add Blocked IPs, to policy via mgmt API. If I reset the    XXXX
-# FW you would also need to add the host objects for mgmt itself.
+# TODO: Push management host objects and firewall policy for management host objects to all the pods.
+# TODO: Expand mgmt_api reference script to push firewall polilcy for Blocked IPs
+# TODO: add pathlib for blocked IPs file?
+
+# ???
 # Use main Python script and subprocess to coordinate actions  XXXXX
 
 ### Gaia API
@@ -22,6 +22,8 @@ Using the Gaia API and the Checkpoint SDK create an auditing script for your pod
         * Minimum password length is >= 10.
         * Each check should display "pass" in green for success and "fail" in red for failure.
 
+Optional: Use a pytest test and a pytest fixture to accomplish the above tests.
+
 ### Gaia SSH
 
 Connect to your pod using Netmiko and SSH.
@@ -36,11 +38,9 @@ set password-controls min-password-length 10
 
 Call the Netmiko .save_config() method to ensure that you properly save these changes.
 
-Re-run your Gaia auditing script and see how the above changes modify the earlier failures in your auditing script.
+Re-run your Gaia auditing script tests and see how the above changes modify the earlier failures in your auditing script. Do you still have any failures?
 
 ### Mgmt API
-TODO: add pathlib for blocked IPs file?
-TODO: explain sets
 
 Using Python connect to the management API of your pod. Create a function that uses the management API and the 'show-group' API endpoint to retrieve the current group membership of the "Blocked IPs" group.
 
@@ -48,15 +48,15 @@ If the "Blocked IPs" group does not exist, then your function should return an e
 
 Create a function that reads in the "blocked_ips.txt" file.
 
-Compare the current blocked IPs (in other words the current members of "Blocked IPs" group) to the new blocked IPs (the blocked IPs read in from the file). Note, you probably will want to use sets for this comparison.
+Compare the current blocked IPs (in other words the current members of the "Blocked IPs" group) to the new blocked IPs (the blocked IPs read in from the file). Note, you probably will want to use sets for this comparison.
 
 If the sets are different, determine the blocked IPs that need to be added (blocked IPs that are in the file, but not currently specified as group members) and the blocked IPs that need to be removed (current members of the Blocked IPs group that do not exist in the "blocked_ips.txt" file).
 
-Create a function that configures host objects for each of the new blocked IPs (blocked IPs to be added).
+Create a function that configures host objects for each of the new blocked IPs (blocked IPs to be added). You can reuse an existing function that you have created to accomplish this task.
 
-Create a function that configures the group object and updates the membership to match the "blocked_ips.txt" file.
+Create a function that configures the group object and updates the membership to match the "blocked_ips.txt" file. You can reuse an existing function that you have created to accomplish this task.
 
-Create a function that removes all of the host objects that used to be members, but are no longer in the Blocked IPs group and are no longer in the blocked_ips.txt file.
+Create a function that removes all of the host objects that used to be members, but are no longer in the Blocked IPs group and are no longer in the blocked_ips.txt file. This will require a "delete-host" operation. You can other modify an existing function or create new code to support this delete operation.
 
 Publish your changes via the mgmt API.
 
