@@ -1,7 +1,5 @@
 # Main Project
 
-# TODO: Configure Gaia DNS settings and check them using py.test
-# TODO: Configure a static route and check them using py.test
 # TODO: Just add in here the 3 managment host objects and the corresponding firewall policy for them (i.e. have the students do this).
 # TODO: Add a py.test fixture for the 3 management hosts and for the firewall policy containing these 3 hosts.
 # TODO: push firewall polilcy for Blocked IPs
@@ -80,7 +78,7 @@ Publish your changes via the mgmt API.
 
 ### Mgmt API FW Policy Configuration
 
-Add the following firewall policy rules:
+Add the following firewall policy rules (publish, but do NOT install them)
 
 ```python
 fw_rules = [ 
@@ -119,14 +117,15 @@ fw_rules = [
 ```
 
 
-### pytest checks (fixtures)
+### Pytest Checks (fixtures)
 
-Create two pytest fixtures:
+Create three pytest fixtures:
 1. pytest fixture that establishes a "gaia_api" connection.
-2. pytest fixture that establishes a Netmiko-SSH connection.
+2. pytest fixture that establishes a "mgmt_api" connection.
+3. pytest fixture that establishes a Netmiko-SSH connection.
 
 
-### pytest tests
+### Pytest Tests (Gaia API)
 
 1. User checks (uses "show-users" endpont):
     * Only configured users are: admin and monitor
@@ -138,20 +137,9 @@ Create two pytest fixtures:
     * Minimum password character complexity is >= 3.
     * Minimum password length is >= 10.
 
-### Gaia SSH
+### Pytest Tests (Mgmt API)
+1. All the host objects are properly configured.
+2. The "Blocked IPs" group is properly configured and has ten members.
+3. The three firewall rules are properly configured.
 
-Connect to your pod using Netmiko and SSH.
-
-Using Netmiko configure the following three items:
-
-```bash
-set password-controls complexity 3
-set password-controls deny-on-nonuse enable on
-set password-controls min-password-length 10
-```
-
-
-Re-run your Gaia auditing script tests and see how the above changes modify the earlier failures in your auditing script. Do you still have any failures?
-
-### Mgmt API
-
+### Install the Firewall Policy
