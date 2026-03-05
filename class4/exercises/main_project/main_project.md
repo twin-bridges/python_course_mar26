@@ -1,10 +1,5 @@
 # Main Project
 
-TODO: Just add in here the 3 managment host objects and the corresponding firewall policy for them (i.e. have the students do this).
-TODO: Add a py.test fixture for the 3 management hosts and for the firewall policy containing these 3 hosts.
-TODO: push firewall polilcy for Blocked IPs
-TODO: add pathlib for blocked IPs file and push this file to a shared location like /tmp
-
 ### Gaia Configuration using API
 
 DNS Config (endpoint: set-dns)
@@ -138,5 +133,6 @@ Create three pytest fixtures:
 1. All the host objects are properly configured.
 2. The "Blocked IPs" group is properly configured and has ten members.
 3. The three firewall rules are properly configured.
+
 
 ### Install the Firewall Policy
