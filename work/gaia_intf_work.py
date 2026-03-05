@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 from cpapi import APIClient, APIClientArgs
 
 
-
 def main():
     api_server = "chkpnt-pod99.lasthop.io"
 
@@ -27,10 +26,10 @@ def main():
     api_version = "1.8"
 
     client_args = APIClientArgs(
-        server="chkpnt-pod99.lasthop.io", 
-        api_version="1.8", 
-        unsafe=True, 
-        context="gaia_api"
+        server="chkpnt-pod99.lasthop.io",
+        api_version="1.8",
+        unsafe=True,
+        context="gaia_api",
     )
 
     with APIClient(client_args) as client:

@@ -22,18 +22,18 @@ if __name__ == "__main__":
 
     headers["X-chkp-sid"] = session_id
 
-    url = base_url + "show-connections" # No
-    url = base_url + "show-arp" # Yes
-    url = base_url + "show-allowed-clients" # Yes
-    url = base_url + "show-nat-pools" # No
-    url = base_url + "show-cluster-state" # No
-    url = base_url + "show-cluster-members" # No
-    url = base_url + "show-param" # No
+    url = base_url + "show-connections"  # No
+    url = base_url + "show-arp"  # Yes
+    url = base_url + "show-allowed-clients"  # Yes
+    url = base_url + "show-nat-pools"  # No
+    url = base_url + "show-cluster-state"  # No
+    url = base_url + "show-cluster-members"  # No
+    url = base_url + "show-param"  # No
     # url = base_url + "set-initial-setup" # Looks very interesting
     # url = base_url + "run-reboot" # Looks interesting
-    url = base_url + "show-serial-number" # Yes
-    url = base_url + "show-asset" # Yes
-    url = base_url + "show-diagnostics" # Looks interesting / requires payload
+    url = base_url + "show-serial-number"  # Yes
+    url = base_url + "show-asset"  # Yes
+    url = base_url + "show-diagnostics"  # Looks interesting / requires payload
     # add-secheduled-job / set- / show- / Looks very interesting
     # lightshot -- Lightweight snapshot
     # scheduled backups
@@ -43,7 +43,6 @@ if __name__ == "__main__":
     # run-script    / Definitely do this!!!
     # Interfaces
     # Licensing
-    
 
     res = api_call(url, headers)
     print(res.json())

@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # assign session ownershipa
     # take over session
     # switch session    # looks interesting
-    #url = base_url + "show-sessions"
+    # url = base_url + "show-sessions"
     url = base_url + "show-gateway-capabilities"
     # show-login-message
     # set-login-message
@@ -45,20 +45,20 @@ if __name__ == "__main__":
     # Multi domain
     # Smart Tasks
     # Repository scripts?
-        # You can create python repository scripts | this could be interesting
+    # You can create python repository scripts | this could be interesting
     # Package deployment -- sounds interesting
-    #url = base_url + "show-repository-packages"
-    #url = base_url + "show-tasks"
-    #payload = {
+    # url = base_url + "show-repository-packages"
+    # url = base_url + "show-tasks"
+    # payload = {
     #    "task-id": "37b26077-b9bb-40c7-a522-45ad0bee23c3",
     #    "details-level": "full"
-    #}
-    #res = api_call(url, headers, payload=payload)
+    # }
+    # res = api_call(url, headers, payload=payload)
     # User
     # High-availability
     # Administrators
-    #url = base_url + "show-logs"    # Interesting
-    # Cloud services    
+    # url = base_url + "show-logs"    # Interesting
+    # Cloud services
     # Misc
     #   where-used
     #   show-changes
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     #   show-unused-objects
 
     res = api_call(url, headers)
-    print(res.json())   
+    print(res.json())
     with open("output.json", "w") as f:
         json.dump(res.json(), f, indent=4)
 
