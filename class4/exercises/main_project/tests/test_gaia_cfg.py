@@ -35,13 +35,13 @@ def test_static_route_cfg(gaia_api):
     assert api_res.success is True
 
     static_route = api_res.data
-    network = static_route['address']
-    mask = static_route['mask-length']
-    next_hop_dict = static_route['next-hop'][0]
-    next_hop = next_hop_dict['gateway']
-    gw_type = static_route['type']
+    network = static_route["address"]
+    mask = static_route["mask-length"]
+    next_hop_dict = static_route["next-hop"][0]
+    next_hop = next_hop_dict["gateway"]
+    gw_type = static_route["type"]
 
-    assert network == '172.31.128.0'
+    assert network == "172.31.128.0"
     assert mask == 21
-    assert next_hop == '172.31.128.1'
-    assert gw_type == 'gateway'
+    assert next_hop == "172.31.128.1"
+    assert gw_type == "gateway"
