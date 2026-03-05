@@ -32,14 +32,13 @@ def config_static_route(api_client):
 
     payload = {
         "address": "172.31.128.0",
-        "mask-length": 21,
-        "next-hop": {"add": {"gateway": "172.31.128.1", "priority": 1}},
+        "mask-length": 28,
+        "next-hop": [{"gateway": "172.31.128.1", "priority": "default"}],
         "type": "gateway",
     }
 
     api_endpoint = "set-static-route"
     api_res = api_client.api_call(command=api_endpoint, payload=payload)
-    ipdb.set_trace()
     if not api_res.success:
         msg = f"{api_endpoint} configuration failed. "
         if hasattr(api_res, "data"):
@@ -63,8 +62,10 @@ def main():
 
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
-
+        print("[green][Gaia Config][/green] Configure DNS Settings")
         config_dns(api_client)
+        print("[green][Gaia Config][/green] Configure Static Route")
+        config_static_route(api_client)
 
 
 if __name__ == "__main__":

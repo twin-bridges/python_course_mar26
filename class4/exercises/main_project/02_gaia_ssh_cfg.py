@@ -25,6 +25,7 @@ with ConnectHandler(**chkpt_fw) as ssh_conn:
         "set password-controls min-password-length 10",
     ]
 
+    print("[green][Gaia Config SSH][/green] Configure Password Policy")
     data = ssh_conn.send_config_set(cfg_commands)
     data += ssh_conn.save_config()
-    print(data)
+    # print(data)
