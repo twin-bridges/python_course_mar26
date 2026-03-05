@@ -63,7 +63,7 @@ def cfg_fw_policy(api_client):
             "destination": fw_name,
             "service": "Any",
             "action": "Accept",
-            "position": 1,
+            "position": 2,
         },
         {
             "layer": "Network",
@@ -72,12 +72,13 @@ def cfg_fw_policy(api_client):
             "destination": fw_name,
             "service": "SSH",
             "action": "Accept",
-            "position": 2,
+            "position": 3,
         },
     ]
 
     for fw_rule in management_rules:
         # Check if fw_rule already exists
+        import ipdb; ipdb.set_trace()
         obj_exists = False
         payload = {"layer": fw_rule["layer"], "name": fw_rule["name"]}
         api_res = api_client.api_call(command="show-access-rule", payload=payload)
@@ -114,10 +115,11 @@ def main():
 
     with APIClient(client_args) as api_client:
         api_client.login(username, password)
+        import ipdb; ipdb.set_trace()
         cfg_fw_policy(api_client)
         api_client.api_call(command="publish")
 
-        install_fw_policy(api_client)
+        # install_fw_policy(api_client)
         display_fw_policy(api_client)
 
 
