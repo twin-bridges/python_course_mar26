@@ -57,28 +57,21 @@ ansible_server = {
 
 ### Mgmt API Blocked IP Configuration
 
-Using Python connect to the management API of your pod. Create a function that uses the management API and the 'show-group' API endpoint to retrieve the current group membership of the "Blocked IPs" group.
+Create a Python script that uses the Mgmt API and configures a set of blocked IPs from a "blocked_ips.txt" file.
 
-If the "Blocked IPs" group does not exist, then your function should return an empty list or an empty set.
+The script should do the following:
+1. Retrieves the current "Blocked IPs" group and extracts all the member hosts. This query must handle the case then the "Blocked IPs" group doesn't exist.
+2. Compares the currently configured blocked IPs (the group members) to the new blocked IPs (from the text file).
+3. Adds any missing new blocked IPs as host objects.
+4. Updates the group membership to match the blocked IPs from the text file.
+5. Removes any blocked IP host objects that are no longer used (previous group members, but no longer in the "blocked_ips.txt" file).
 
-Create a function that reads in the "blocked_ips.txt" file.
-
-Compare the current blocked IPs (in other words the current members of the "Blocked IPs" group) to the new blocked IPs (the blocked IPs read in from the file). Note, you probably will want to use sets for this comparison.
-
-If the sets are different, determine the blocked IPs that need to be added (blocked IPs that are in the file, but not currently specified as group members) and the blocked IPs that need to be removed (current members of the Blocked IPs group that do not exist in the "blocked_ips.txt" file).
-
-Create a function that configures host objects for each of the new blocked IPs (blocked IPs to be added). You can reuse an existing function that you have created to accomplish this task.
-
-Create a function that configures the group object and updates the membership to match the "blocked_ips.txt" file. You can reuse an existing function that you have created to accomplish this task.
-
-Create a function that removes all of the host objects that used to be members, but are no longer in the Blocked IPs group and are no longer in the blocked_ips.txt file. This will require a "delete-host" operation. You can other modify an existing function or create new code to support this delete operation.
-
-Publish your changes via the mgmt API.
+Publish your changes.
 
 
 ### Mgmt API FW Policy Configuration
 
-Add the following firewall policy rules (publish, but do NOT install them)
+Add the following firewall policy rules via the Mgmt API (publish, but do NOT install them)
 
 ```python
 fw_rules = [ 
@@ -116,8 +109,9 @@ fw_rules = [
 ]
 ```
 
+## Verifications of Current Configuration using Pytest.
 
-### Pytest Checks (fixtures)
+### Pytest Fixtures
 
 Create three pytest fixtures:
 1. pytest fixture that establishes a "gaia_api" connection.
@@ -128,7 +122,7 @@ Create three pytest fixtures:
 ### Pytest Tests (Gaia API)
 
 1. User checks (uses "show-users" endpont):
-    * Only configured users are: admin and monitor
+    * The only configured users are: admin and monitor
 2. Password policy checks (uses "show-password-policy"):
     * Maximum failed login attempts is <= 10.
     * Minimum account lockout duration is >= 600s.
@@ -136,6 +130,9 @@ Create three pytest fixtures:
     * Lock inactive accounts is set to True.
     * Minimum password character complexity is >= 3.
     * Minimum password length is >= 10.
+3. DNS settings match the items you configured earlier in this lab.
+4. The static route you configured exists and has the correct next hop.
+
 
 ### Pytest Tests (Mgmt API)
 1. All the host objects are properly configured.

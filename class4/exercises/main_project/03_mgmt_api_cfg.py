@@ -10,6 +10,7 @@ from blocked_ip_funcs import (
     get_current_blocked_ips,
 )
 from chkpt_policy_funcs import cfg_fw_rules, install_fw_policy, extract_fw_name
+from host_objects import smart_console_private, smart_console_public, ansible_server  
 
 DEBUG = False
 
@@ -60,22 +61,6 @@ def gen_mgmt_fw_rules(api_client, fw_name):
 
 def cfg_std_mgmt_hosts(api_client):
     print("[green][Mgmt API Config][/green] Configure Management Hosts")
-    smart_console_private = {
-        "name": "Windows SmartConsole",
-        "ipv4-address": "172.31.12.101",
-        "color": "red",
-    }
-    smart_console_public = {
-        "name": "Windows SmartConsole Public",
-        "ipv4-address": "3.71.9.240",
-        "color": "red",
-    }
-    ansible_server = {
-        "name": "Ansible Server",
-        "ipv4-address": "3.125.34.232",
-        "color": "black",
-    }
-
     mgmt_host_objects = [smart_console_private, smart_console_public, ansible_server]
     cfg_host_objects(api_client, host_objects=mgmt_host_objects)
 
