@@ -10,53 +10,10 @@ from blocked_ip_funcs import (
     get_current_blocked_ips,
 )
 from chkpt_policy_funcs import cfg_fw_rules, install_fw_policy, extract_fw_name
-from host_objects import smart_console_private, smart_console_public, ansible_server  
+from host_objects import smart_console_private, smart_console_public, ansible_server
+from gen_fw_rules import gen_blockedip_fw_rules, gen_mgmt_fw_rules
 
 DEBUG = False
-
-def gen_blockedip_fw_rules(api_client):
-    blacklisted_ips = [
-        {
-            "layer": "Network",
-            "name": "Blacklisted IPs",
-            "source": "Blocked IPs",
-            "destination": "Any",
-            "service": "Any",
-            "action": "Drop",
-            "position": 1,
-        },
-    ]
-
-    return blacklisted_ips
-
-
-def gen_mgmt_fw_rules(api_client, fw_name):
-    management_rules = [
-        {
-            "layer": "Network",
-            "name": "Ansible Management Access",
-            "source": [
-                "Ansible Server",
-                "Windows SmartConsole",
-                "Windows SmartConsole Public",
-            ],
-            "destination": fw_name,
-            "service": "Any",
-            "action": "Accept",
-            "position": 2,
-        },
-        {
-            "layer": "Network",
-            "name": "SSH Access",
-            "source": "Any",
-            "destination": fw_name,
-            "service": "SSH",
-            "action": "Accept",
-            "position": 3,
-        },
-    ]
-
-    return management_rules
 
 
 def cfg_std_mgmt_hosts(api_client):
@@ -132,8 +89,8 @@ def main():
         cfg_std_mgmt_hosts(api_client)
         cfg_blocked_ips(api_client)
 
-        fw_rules = gen_mgmt_fw_rules(api_client, fw_name)
-        fw_rules = gen_blockedip_fw_rules(api_client) + fw_rules
+        fw_rules = gen_mgmt_fw_rules(fw_name)
+        fw_rules = gen_blockedip_fw_rules() + fw_rules
         print("[green][Mgmt API Config][/green] Configure Firewall Rules")
         cfg_fw_rules(api_client, fw_rules=fw_rules)
 
