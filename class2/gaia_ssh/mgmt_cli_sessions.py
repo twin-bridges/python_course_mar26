@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 import time
 import ipdb  # noqa
 from rich import print
@@ -83,7 +84,6 @@ Session Timeout: {session_timeout}
 
             # Check for sessions under a day old (older sessions are probably SmartConsole)
             if current_time - epoch_create_time < ONE_DAY_MS:
-                ipdb.set_trace()
                 # Take over the session
                 cmd = f'''mgmt_cli take-over-session uid "{session_uid}" --session-id "{sid}" disconnect-active-session true --format json'''
                 data = ssh_conn.send_command(cmd, read_timeout=30)
@@ -93,8 +93,9 @@ Session Timeout: {session_timeout}
                 print(data)
                 print(msg)
                 # Discard the session
-                cmd = 'mgmt_cli discard'
-                data = ssh_conn.send_command(cmd, read_timeout=20)
+                cmd = 'mgmt_cli discard\n'
+                data = ssh_conn.write_channel(cmd)
+                sys.exit(0)
             else:
                 print("Session over 24 hours old...retaining")
 
